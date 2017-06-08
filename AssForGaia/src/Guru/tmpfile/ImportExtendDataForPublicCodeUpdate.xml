@@ -1,0 +1,109 @@
+﻿<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <Author>Administrator</Author>
+  <LastAuthor>Peter.Q.Chen</LastAuthor>
+  <Created>2017-06-07T13:09:42Z</Created>
+  <LastSaved>2017-06-07T13:09:42Z</LastSaved>
+  <Version>15.00</Version>
+ </DocumentProperties>
+ <OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office">
+  <AllowPNG/>
+ </OfficeDocumentSettings>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>7605</WindowHeight>
+  <WindowWidth>13335</WindowWidth>
+  <WindowTopX>0</WindowTopX>
+  <WindowTopY>0</WindowTopY>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Font ss:FontName="宋体" x:CharSet="134" ss:Size="11" ss:Color="#000000"/>
+   <Interior/>
+   <NumberFormat/>
+  </Style>
+  <Style ss:ID="s62">
+   <Font ss:FontName="宋体" x:CharSet="134" ss:Size="11" ss:Color="#000000"/>
+   <Interior/>
+   <NumberFormat ss:Format="@"/>
+  </Style>
+  <Style ss:ID="s63">
+   <Font ss:FontName="宋体" x:CharSet="134" ss:Size="11" ss:Color="#FFFFFF"/>
+   <Interior ss:Color="#3366FF" ss:Pattern="Solid"/>
+   <NumberFormat/>
+  </Style>
+  <Style ss:ID="s64">
+   <Font ss:FontName="宋体" x:CharSet="134" ss:Size="11" ss:Color="#FFFFFF"/>
+   <Interior ss:Color="#FF0000" ss:Pattern="Solid"/>
+   <NumberFormat/>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="OrgBusinessDataImport">
+  <Table ss:ExpandedColumnCount="6" ss:ExpandedRowCount="1" x:FullColumns="1"
+   x:FullRows="1" ss:DefaultColumnWidth="54" ss:DefaultRowHeight="13.5">
+   <Column ss:StyleID="s62" ss:Span="5"/>
+   <Row>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">组织名称</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">组织代码</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">生效日期</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">公用代码类型(更新公用代码)</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">公用代码编号(更新公用代码)</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">公用代码名称(更新公用代码)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">组织架构同步(组织同步)</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">1</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">安徽分公司</Data></Cell>
+   </Row>   
+   
+   
+   
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <Selected/>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+ <Worksheet ss:Name="填写规则如下">
+  <Table ss:ExpandedColumnCount="1" ss:ExpandedRowCount="7" x:FullColumns="1"
+   x:FullRows="1" ss:DefaultColumnWidth="54" ss:DefaultRowHeight="13.5">
+   <Column ss:StyleID="s62"/>
+   <Row>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">填写规则如下： </Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">1,组织代码必填,是系统中已接受的组织代码 </Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">2,生效日期必填，请输入YYYY-MM-DD格式 </Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">3,时间日期请输入YYYY-MM-DD格式 </Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">4,红色为必填项 </Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String"></Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">请按照规则录入数据，否则将导致数据丢失或录入失败！</Data></Cell>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+</Workbook>

@@ -1,0 +1,55 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
+<HTML>
+	<HEAD id="HEAD1"><title>
+	DownLoad
+</title><meta name="GENERATOR" content="Microsoft Visual Studio .NET 7.1" /><meta name="CODE_LANGUAGE" content="C#" /><meta name="vs_defaultClientScript" content="JavaScript" /><meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+
+        <!-- Favicons -->
+        <link rel="apple-touch-icon-precomposed" href="../Content/images/ico/apple-touch-icon-precomposed.png" /><link rel="icon" href="../favicon.ico" type="image/x-icon" /><link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" /><link rel="bookmark" href="../favicon.ico" type="image/x-icon" /></HEAD>
+	<body MS_POSITIONING="GridLayout" onload="To_export()" onbeforeunload="DeleteTempFile(event)">
+		<form name="Form1" method="post" action="./downLoad.aspx?filename=%2fDownLoadDir%2fQueryDataExport_f850b698-1246-42d4-8e4b-77a8d2b845a7.xls" id="Form1">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUJNDczOTA2ODM1DxYGHgxUZW1wRmlsZU5hbWUFRS9Eb3duTG9hZERpci9RdWVyeURhdGFFeHBvcnRfZjg1MGI2OTgtMTI0Ni00MmQ0LThlNGItNzdhOGQyYjg0NWE3Lnhscx4QSXNOZWVkRGVsZXRlRmlsZQUBWR4TVmFsaWRhdGVSZXF1ZXN0TW9kZQIBFgICAQ9kFgYCAQ8PFgIeBFRleHQFDOaVsOaNruWvvOWHumRkAgkPDxYCHghJbWFnZVVybAUYLi4vSW1hZ2UvZG93bmxvYWQgMTYuZ2lmZGQCCw8PFgIfAwUJ6K+35Y2V5Ye7ZGRk0jKzpgUColT77nQ1HtT5C8CeWF8=" />
+
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="C08932EF" />
+			
+				<TABLE id="Table1" style="FONT-SIZE: 12px; Z-INDEX: 101; LEFT: 8px; WIDTH: 288px; POSITION: absolute; TOP: 8px; HEIGHT: 237px"
+					height="237" cellSpacing="0" cellPadding="0" width="288" border="0">
+					<TR style="HEIGHT: 30px">
+						<TD>
+							<span id="LblDownLoad"><b>数据导出</b></span>
+							<input name="txtFileName" type="text" value="/DownLoadDir/QueryDataExport_f850b698-1246-42d4-8e4b-77a8d2b845a7.xls" id="txtFileName" style="display:none" />
+							<input type="submit" name="btnDeleteTempFile" value="" id="btnDeleteTempFile" style="display:none" />
+							<input name="txtTemplateID" type="text" id="txtTemplateID" DESIGNTIMEDRAGDROP="26" style="display:none" /></TD>
+					</TR>
+					<TR vAlign="middle" align="center">
+						<TD>
+							<img id="Image" src="../Image/download%2016.gif" align="absmiddle" border="0" />
+							<a id="lnkDownLoad" href="javascript:__doPostBack(&#39;lnkDownLoad&#39;,&#39;&#39;)">请单击</a>
+							<input type="submit" name="btnDownload" value="" id="btnDownload" style="display:none;" />
+						</TD>
+					</TR>
+				</TABLE>
+			
+		</form>
+		<script>
+		function To_export()
+		{
+		   if('True'.toUpperCase()=="TRUE")
+		   {
+		       document.getElementById("btnDownload").click();
+		   }
+	    }
+		    function DeleteTempFile(event) {
+		        var isNeedDeleteFile = "Y";
+		        if (isNeedDeleteFile == "Y") {
+		            var e = event || window.event;
+		            if (e.clientY < 0 || e.altKey) {
+		                document.getElementById("btnDeleteTempFile").click();
+		            }
+		        }
+		    }
+		
+		</script>
+	</body>
+</HTML>
