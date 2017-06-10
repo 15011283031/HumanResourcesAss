@@ -9,7 +9,8 @@ from twisted.conch.test.test_helper import HEIGHT
 from openpyxl.styles.borders import Side
 import codecs #用于查看编码格式
 from PRPCRYPT import prpcrypt #调用加密算法，用于加密数据库链接中的密码
-from Guru.GAIAMDC import addNewTmpl,queryTmpl,addTmplVar,dictQueryTmplVars,addNewTask,queryTaskbyTmpl,addMainDataSource,addSubDataSource,dictQuerySubDataSourceList,readDocument,listVariableMappingByTaskId,listRecipientVarsByTmpId,addVarMapping,addRecipient,addTmplContent#调用邮件配置模块，用于配置邮件提醒
+import GAIAMDC
+#from Guru.GAIAMDC import addNewTmpl,queryTmpl,addTmplVar,dictQueryTmplVars,addNewTask,queryTaskbyTmpl,addMainDataSource,addSubDataSource,dictQuerySubDataSourceList,readDocument,listVariableMappingByTaskId,listRecipientVarsByTmpId,addVarMapping,addRecipient,addTmplContent#调用邮件配置模块，用于配置邮件提醒
 #from GAIAPAYROLL import * #调用薪资配置模块，用于薪资公式处理
 #import PayrollCal as PayrollCal
 import json #json数据格式，用于写入数据库链接配置信息

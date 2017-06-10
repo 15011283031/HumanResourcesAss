@@ -15,10 +15,17 @@ Including another URLconf
 """
 
 from django.conf.urls import url
+from django.conf.urls import include
+from django.contrib import admin
+#from GURU.views import index
 from . import view,search
+from . import settings
  
 urlpatterns = [
     url(r'^hello$', view.hello),
     url(r'^search-form$', search.search_form),
-    url(r'^search$', search.search),
+    url(r'^search$', search.search), 
+    url(r'^GURU/', include('GURU.urls')),
+    
+
 ]
