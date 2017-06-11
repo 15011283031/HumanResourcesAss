@@ -1,7 +1,16 @@
 from django.conf.urls import url
-from . import index
+from GURU import updateLogin,updateWebSource,main,GAIAPAYROLL
 
 urlpatterns = [
-    url(r'^index$',index.loginConfig),
-    url(r'^saveNewConnecttion/$', index.saveNewConnecttion, name='saveNewConnecttion'),
+    url(r'^main/updateLogin$',updateLogin.loginConfig),
+    url(r'^main/saveNewConnecttion/$', updateLogin.saveNewConnecttion, name='saveNewConnecttion'),
+    url(r'^main/updateWebSource$',updateWebSource.websourceConfig),
+    url(r'^main/saveWebSource/$', updateWebSource.saveWebSource, name='saveWebSource'),
+    url(r'^main/$',main.main),
+    url(r'^GAIAPAYROLL/$',GAIAPAYROLL.GAIAPAYROLL),
+    url(r'^GAIAPAYROLL/updatePayroll/$',GAIAPAYROLL.web_updatePublicGroupByDoc),
+    
+    
+    
+    
 ]

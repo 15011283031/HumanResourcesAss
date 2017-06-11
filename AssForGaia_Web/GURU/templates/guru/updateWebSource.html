@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'gurucss/ehr.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'gurucss/cus.css' %}" />
+
+<title>AssForGaia</title>
+</head>
+<body>
+<div class='bg-logon-content'>
+    <form action="saveWebSource/" method="POST">
+    {% csrf_token %}
+    <div class='tabledtNav'><table id="Table3" class='dtNAV'>
+		<tr>
+        	<td class='TD1'>站点根目录</td>
+        	<td class='TD2'><input name="rooturl" maxlength="40" id="rooturl" class="TextBox normal-text" style="width:200px;" type="text"> </td>	
+      	</tr>
+      	<tr>
+        	<td>主机</td>
+        	<td><input name="host" maxlength="40" id="host" class="TextBox normal-text" style="width:200px;" type="text"> </td>	
+      	</tr>
+      	<tr>
+        	<td>端口</td>
+        	<td><input name="port" maxlength="40" id="port" class="TextBox normal-text" style="width:200px;" type="text"> </td>	
+      	</tr>
+      	<tr>
+        	<td>系统账户</td>
+        	<td><input name="webname" maxlength="40" id="webname" class="TextBox normal-text" style="width:200px;" type="text"> </td>	
+      	</tr>
+      	<tr>
+        	<td>系统密码</td>
+        	<td><input name="webpsw" maxlength="40" id="webpsw" class="TextBox normal-text" style="width:200px;" type="text"> </td>	
+      	</tr>
+      	<tr>
+      		<td colspan='2'><input class='btn-primary btn-lg btn-block' name="btnUpdate" value="更新WEB源" id="btnUpdate" title="更新WEB源" type="submit"></td>
+      	</tr>
+	</table></div>
+      	
+    </form>
+</div>
+
+<script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>    
+<script>
+    $(document).ready(function(){
+    	$("#btnUpdate").click(function(){
+    		var rooturl = $ ("rooturl").val();
+    		var host = $ ("host").val();
+    		var port = $ ("port").val();
+    		var webname = $ ("webname").val();
+    		var webpsw = $ ("webpsw").val();
+	    }); 	
+    });	
+</script>
+
+</body>
+</html>

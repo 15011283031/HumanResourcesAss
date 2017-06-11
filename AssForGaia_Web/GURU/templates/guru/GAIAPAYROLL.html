@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'gurucss/ehr.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'gurucss/cus.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'gurucss/style.css' %}" />
+<script>
+
+function updatePublicGroupByDoc() {
+	var action = $("#btnupdatePublicGroupByDoc").val()
+	document.getElementById("__Action").value = action;
+}
+function importPublicDetailByDoc() {
+	var action = $("#btnimportPublicDetailByDoc").val()
+	document.getElementById("__Action").value = action;
+}
+function updateExtendGroup() {
+	var action = $("#btnupdateExtendGroup").val()
+	document.getElementById("__Action").value = action;
+} 
+
+
+</script>
+
+
+<title>AssForGaia</title>
+</head>
+
+<body class='cusbody'>
+<header>
+<div class='bg-bread'>
+    <table class='dtBread'>
+        <tr>
+            <td text-align="left">
+	            <input class='autobutton' name="resHome" value="返回首页" id="resHome" type="button" onclick="window.location.href = '/GURU/main'; return false;"/>
+	            <input class='autobutton' name="resHome2" value="空" id="resHome2" type="button" onclick="window.location.href = '/GURU/main'; return false;"/>
+	            <input class='autobutton' name="resHome3" value="空" id="resHome3" type="button" onclick="window.location.href = '/GURU/main'; return false;"/>
+	            <input class='autobutton' name="resHome4" value="空" id="resHome4" type="button" onclick="window.location.href = '/GURU/main'; return false;"/>
+	            <input class='autobutton' name="resHome5" value="空" id="resHome5" type="button" onclick="window.location.href = '/GURU/main'; return false;"/>
+            </td>   
+        </tr>
+    </table>
+</div>
+</header>
+<div class='bg-title-content'>
+	<div class='bg-logon-content leftcontent minwidth'>
+	<form action='updatePayroll/' method="POST">
+	<input type="hidden" name="__Action" id="__Action" value="" />
+	
+	<table id="Table3" class='dtNAV'>
+		<tr>
+        	<td class='TD1'>规格文件地址</td>
+        	<td class='TD2'><input name="filename" maxlength="40" id="filename" class="TextBox normal-text" style="width:200px;" type="text">
+        	 </td>	
+      	</tr>
+	</table>
+	<table class='dtBread'>
+        <tr>
+            <td><input class='contentbutton autowidth' name="btnupdatePublicGroupByDoc" value="更新公用代码群组" id="btnupdatePublicGroupByDoc" type="submit" onclick="updatePublicGroupByDoc()"/></td>
+            <td><input class='contentbutton autowidth' name="btnimportPublicDetailByDoc" value="导入公用代码明细" id="btnimportPublicDetailByDoc" type="submit" onclick="importPublicDetailByDoc();"/></td> 
+            <td><input class='contentbutton autowidth' name="btnupdateExtendGroup" value="更新业务数据" id="btnupdateExtendGroup" type="submit" onclick="updateExtendGroup();"/></td>   
+        </tr>
+    </table>
+	</form>
+	</div>	
+</div>
+
+<script type="text/javascript" src="{% static 'gurujs/scripts.js' %}"></script>
+<script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>    
+<script>
+    var defaultFileName = {{defaultFileName|safe}}
+    document.getElementById("filename").value = defaultFileName;   
+</script>
+</body>
+</html>

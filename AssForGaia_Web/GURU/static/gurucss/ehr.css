@@ -30,6 +30,7 @@ Table {
 /*if div has tabIndex attribute, it has outline in chrome when it focused*/
 div {
     outline:none;
+    height:100%;
 }
 
 /* HyperLink CSS */
