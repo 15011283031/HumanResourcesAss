@@ -2,6 +2,7 @@ from django.conf.urls import url
 from GURU import updateLogin,updateWebSource,main,GAIAPAYROLL
 
 urlpatterns = [
+    url(r'^$',main.main),
     url(r'^main/updateLogin$',updateLogin.loginConfig),
     url(r'^main/saveNewConnecttion/$', updateLogin.saveNewConnecttion, name='saveNewConnecttion'),
     url(r'^main/updateWebSource$',updateWebSource.websourceConfig),
@@ -9,7 +10,7 @@ urlpatterns = [
     url(r'^main/$',main.main),
     url(r'^GAIAPAYROLL/$',GAIAPAYROLL.GAIAPAYROLL),
     url(r'^GAIAPAYROLL/updatePayroll/$',GAIAPAYROLL.web_updatePublicGroupByDoc),
-    
+    url(r'^GAIAPAYROLL/updateFormuAbout/$',GAIAPAYROLL.web_updateFormuAbout),
     
     
     

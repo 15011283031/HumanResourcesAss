@@ -15,6 +15,16 @@ import http.cookiejar as cookielib
 import urllib.parse
 import json #json数据格式，用于写入数据库链接配置信息
 from types import CodeType
+#正则匹配文本
+import re
+#读写xml文件
+try:
+  import xml.etree.cElementTree as ET
+except ImportError:
+  import xml.etree.ElementTree as ET
+
+import xlrd
+from xlutils.copy import copy as xlwtcopy
 
 t1 = time.clock()
 
@@ -326,6 +336,7 @@ def addExtendGroup(driver,requestInfo,addSingleExtendGroup,listExtendGroup):
             driver.find_element_by_id('rlType_1').click()
         else:
             print('Group type :%s is not variable!'%(addExtendGroupType))
+        time.sleep(2)
         driver.find_element_by_id('btnAdd').click()
         time.sleep(2)
         message = driver.switch_to_alert().text
@@ -338,6 +349,7 @@ def addExtendGroup(driver,requestInfo,addSingleExtendGroup,listExtendGroup):
             driver.switch_to_alert().accept()
     else:
         print('addExtendGroupName:%s is null,Add ignore!'%(addExtendGroupName))
+        
 def addExtendDetail(driver,requestInfo,addSingleExtendDetail,listExtendDetail,groupID):        
     addExtendDetailName = addSingleExtendDetail.get('列字段名称')
     listExtendDetailName = [group.get('字段名称') for group in listExtendDetail]
@@ -395,9 +407,225 @@ def addExtendDetail(driver,requestInfo,addSingleExtendDetail,listExtendDetail,gr
     else:
         print('addExtendDetailName:%s is null,Add ignore!'%(addExtendDetailName))        
            
-            
- 
+def importPublicCodeDetail(driver,requestInfo,listExtendByDoc,listPublicByDoc):
+    listExtendGroup = queryExtendGroup(requestInfo)
+    pc_ExtendGroup = {'repeatLimit': '无限制', 'extendName': '更新公用代码明细', 'extendDesc': 'Sys config for update publiccodeitem', 'extendType': '组织业务数据', 'codeItem': [{'列字段名称': '公用代码类型', '显示方式': '文本框', '数据类型': '文本', '是否必填': '否', '数据关联': '', '序号': '1'}, {'列字段名称': '公用代码编号', '显示方式': '文本框', '数据类型': '文本', '是否必填': '否', '数据关联': '', '序号': '2'},{'列字段名称': '公用代码名称', '显示方式': '文本框', '数据类型': '文本', '是否必填': '否', '数据关联': '', '序号': '3'}]}
+    #firt step:add extend group
+    addExtendGroup(driver,requestInfo,pc_ExtendGroup,listExtendGroup)
+    #second step:add extend detail
+    listExtendGroup = queryExtendGroup(requestInfo)
+    pc_SysExtendGroup = [singleExtendGroup for singleExtendGroup in listExtendGroup if singleExtendGroup.get('群组名称')==pc_ExtendGroup.get('extendName')]
+    pc_ExtendDetail = pc_ExtendGroup.get('codeItem')
+    pc_SysExtendGroup_GroupID = pc_SysExtendGroup[0].get('群组编号')
+    pc_SysExtendGroup_ExtendDetail = queryExtendDetail(requestInfo,pc_SysExtendGroup_GroupID)
+    if pc_ExtendDetail is not None and len(pc_ExtendDetail) > 0:
+        for single_pc_ExtendDetail in pc_ExtendDetail:
+            addExtendDetail(driver,requestInfo,single_pc_ExtendDetail,pc_SysExtendGroup_ExtendDetail,pc_SysExtendGroup_GroupID)    
+    #third step:download template
+    needurl = requestInfo.rooturl + r'/ePayroll/PersonalPayrollInformationManage/OrgBusinessDataImport.aspx'
+    driver.get(needurl)
+    time.sleep(2)
+    driver.find_element_by_xpath("//select[@id='drpGroup']/option[@title='"+ pc_ExtendGroup.get('extendName') +"']").click()
+    driver.find_element_by_id('btnQuery').click()
+    time.sleep(2)
+    driver.find_element_by_xpath("//select[@class='pager-sizes']/option[@title='200']").click()
+    time.sleep(2)
+    tmpPageSource = driver.page_source    
+    readSoup = bs.BeautifulSoup(tmpPageSource,"html.parser")
+    recordTotalNum =readSoup.find(id = 'grdNavigator_lblRecordsCount').string
+    totalPagesNum = int(int(recordTotalNum)/200)
+    for i in range(totalPagesNum):
+        driver.find_element_by_id('btnQuery').click()
+        time.sleep(2)
+        driver.find_element_by_id('chkAll').click()
+        time.sleep(2)
+        driver.find_element_by_id('btnDelete').click()
+        time.sleep(2)
+        msg = driver.switch_to_alert().text
+        print(msg)
+        driver.switch_to_alert().accept()
+    driver.find_element_by_id('downTemplate').click()   
+    time.sleep(2)
+    now_handle = driver.current_window_handle
+    all_handles = driver.window_handles
+    for handle in all_handles:
+        if handle in driver.window_handles:
+            driver.switch_to_window(handle)
+            if driver.current_window_handle == now_handle:
+                pass
+            else:
+                driver.close()     
+        else:
+            pass
+    driver.switch_to_window(now_handle)
+    tmpPageSource = driver.page_source    
+    readSoup = bs.BeautifulSoup(tmpPageSource,"html.parser")
+    downLoadUrl = requestInfo.rooturl + re.findall(r"/CommonPage.*\.xls",str(readSoup))[0]
+    response,content = http.request(uri = downLoadUrl,method = 'POST', headers=requestInfo.headers)
+    readSoup = bs.BeautifulSoup(content.decode('utf-8'),"html.parser")
+    trueLoadUrl = requestInfo.rooturl + re.findall(r"/DownLoadDir.*\.xls",str(readSoup))[0]
+    #print(content.decode('utf-8'))
+    filename = requestInfo.tmpFilePath + r'/ImportExtendDataForPublicCodeUpdate.xml'
+    newfilename = requestInfo.tmpFilePath + r'\NewdataExtendDataForPublicCodeUpdate.xml'
+    urllib.request.urlretrieve(url=trueLoadUrl, filename=filename)
     
+    #for singleExtend in listExtendByDoc:
+    row_former = '<ss:Row>\r\n' 
+    col_former = '<ss:Cell>\r\n<ss:Data ss:Type="String">'
+    row_end = '</ss:Row>\r\n'
+    col_end = '</ss:Data>\r\n</ss:Cell>\r\n'                  
+    defaultOrgCode = '01'
+    defaultEffectDate = '2015-01-01'
+    addContent = ''
+    i = 1 #从第二行开始
+    for sinPC in listPublicByDoc:
+        print('sinPC:%s'%(sinPC))
+        PCType = sinPC.get('codeType')
+        PCName = sinPC.get('codeName')
+        listCodeItem = sinPC.get('codeItem') 
+        if PCType in ['薪资公用代码','保险共用代码']:
+            for sinItem in listCodeItem:
+                print('sinItem:%s'%(sinItem))
+                itemID = sinItem.get('codeItemID')
+                itemValue = sinItem.get('codeItemValue')
+                addContent = addContent + row_former + col_former + col_end   
+                addContent = addContent + col_former + defaultOrgCode + col_end 
+                addContent = addContent + col_former + defaultEffectDate + col_end 
+                addContent = addContent + col_former + PCName + col_end 
+                addContent = addContent + col_former + itemID + col_end 
+                addContent = addContent + col_former + itemValue + col_end + row_end
+    #print('addContent:%s'%(addContent))
+     
+    fileobject = open(filename,'rb')
+    fileReadContent = fileobject.readlines()
+    fileobject.close()
+    sheetState = 0
+    tableState = 0
+    fileobject = open(newfilename,'wb')
+    for line in fileReadContent:
+        lineContent = line.decode('utf-8')
+        #print('lineContent:%s'%(lineContent))         
+        if  sheetState == 0:      
+            if  r'Worksheet' in lineContent and r'OrgBusinessDataImport' in lineContent:
+                sheetState = 1
+        elif sheetState > 0:
+            if  r'<ss:Table>' in lineContent:
+                tableState = 1 
+            if  r'</ss:Worksheet>' in lineContent:
+                sheetState = 0
+            if tableState > 0 :
+                if  r'</ss:Table>' in lineContent:
+                    tableState = 0
+                    line = addContent.encode('utf-8') + line
+                    
+                else:
+                    pass
+        #print('sheetState:%s'%(sheetState)) 
+        #print('tableState:%s'%(tableState))         
+        #print('line:%s'%(line))        
+        fileobject.write(line)            
+    fileobject.close()            
+
+    
+    needurl = requestInfo.rooturl + r'/ePayroll/PersonalPayrollInformationManage/OrgBusinessDataImportAction.aspx?GroupId=' + pc_SysExtendGroup_GroupID
+    driver.get(needurl)
+    time.sleep(2)
+    driver.find_element_by_id('lblimportdata').click()
+    time.sleep(2)
+    driver.find_element_by_id('ucUploadFile_myFile').send_keys(newfilename)
+    driver.find_element_by_id('ucUploadFile_btnImput').click()
+    time.sleep(2)
+    driver.find_element_by_id('btnSave').click()
+    
+    
+    #msg = driver.switch_to_alert().accept()
+    #print('msg:%s'%(msg))   
+    
+def updateExtendGroup(driver,requestInfo,listExtendByDoc):
+    listExtendGroup = queryExtendGroup(requestInfo)
+    for sinExtend in listExtendByDoc:
+        addExtendGroup(driver,requestInfo,sinExtend,listExtendGroup)
+    listExtendGroup = queryExtendGroup(requestInfo)
+    for cur_ExtendGroup in listExtendByDoc:
+        cur_SimExtendGroup = [singleExtendGroup for singleExtendGroup in listExtendGroup if singleExtendGroup.get('群组名称')==cur_ExtendGroup.get('extendName')]
+        cur_ExtendDetail = cur_ExtendGroup.get('codeItem')
+        print('cur_ExtendGroup:%s'%(cur_ExtendGroup))  
+        cur_ExtendGroup_GroupID = cur_SimExtendGroup[0].get('群组编号')
+        cur_ExtendGroup_ExtendDetail = queryExtendDetail(requestInfo,cur_ExtendGroup_GroupID)
+        if cur_ExtendDetail is not None and len(cur_ExtendDetail) > 0:
+            for sin_cur_ExtendDetail in cur_ExtendDetail:
+                addExtendDetail(driver,requestInfo,sin_cur_ExtendDetail,cur_ExtendGroup_ExtendDetail,cur_ExtendGroup_GroupID) 
+def queryFormula(driver,requestInfo,CFGfilename):
+    
+    workbook = xlrd.open_workbook(CFGfilename)
+    ws = workbook.sheet_by_name('OPT010薪资函数')
+    rowlen,collen = ws.usp_get_len()
+    tablename = []
+    tablecontent = []
+    for i in range(rowlen):
+        rowcontent = []
+        for j in range(collen):
+            if i == 0:
+                cellcontent = ws.cell(i,j).value
+                tablename.append(ws.cell(i,j).value )
+            else:
+                cellcontent = ws.cell(i,j).value
+                rowcontent.append(ws.cell(i,j).value)
+        if i != 0:        
+            tablecontent.append(rowcontent.copy())
+    i = 0
+    tableFormu = []
+    dictFormu = {}
+    for sinFor in tablecontent:
+        #print('sinFor:%s'%(sinFor))
+        for i in range(len(tablename)):
+            dictFormu[tablename[i]] = sinFor[i]
+        tableFormu.append(dictFormu.copy())
+    print('tableFormu:%s'%(tableFormu))
+    return tableFormu
+
+def updateFormula(driver,requestInfo,listFormuByDoc):       
+    needurl = requestInfo.rooturl + r'/ePayroll/PayrollParameterSetting/PayrollScriptEdit.aspx?optype=add&addtype=FUNCTIONASSISTANTKEY'
+    driver.get(needurl)   
+    for sinForm in listFormuByDoc:
+        formu_name = sinForm.get('名称')
+        formu_usetype = sinForm.get('使用状态')
+        formu_type = sinForm.get('类型')
+        formu_enname = sinForm.get('调用代码')
+        formu_code = sinForm.get('函数内容')
+        formu_help = sinForm.get('帮助')            
+        if formu_usetype == '使用中' and formu_type == '辅助函数':
+            driver.get(needurl) 
+            time.sleep(2)
+            driver.find_element_by_id('txtName').send_keys(formu_name)
+            driver.find_element_by_id('txtInnerName').send_keys(formu_enname)
+            driver.find_element_by_id('txtContent').send_keys(formu_code)
+            driver.find_element_by_id('txtHelper').send_keys(formu_help)
+            driver.find_element_by_id('btnSave').click()
+            time.sleep(2)
+            try:
+                msg = driver.switch_to_alert().text
+            except(Exception):
+                print('no msg formu_name:%s'%(formu_name))
+            else:
+                if msg == '新增成功':
+                    print('Add Success formu_name：%s'%(formu_name))
+                    driver.switch_to_alert().accept()
+                else:
+                    print('Add Failed formu_name:%s;Because of:%s'%(formu_name,msg))
+                    driver.switch_to_alert().accept()
+        else:
+            print('other type formu_name%s'%(formu_name)) 
+    
+        
+            
+            
+    #firt step:add extend group
+    #addExtendGroup(driver,requestInfo,pc_ExtendGroup,listExtendGroup)
+    pass    
+ 
+def projectend():
+    pass   
 
 
 cookie = cookielib.CookieJar()
@@ -426,21 +654,33 @@ resLogin = loginInSystem(requestInfo)
 driver = createDriver(requestInfo)
 #事项1：通过doc读取公用代码
 fileName = r'E:\工作文档\1608-中银\06业务流程分析\薪资管理\test.docx'
-#listPublicByDoc = readPublicByDoc(requestInfo,fileName)
-#listExtendByDoc = readExtendByDoc(requestInfo,fileName)
+listPublicByDoc = readPublicByDoc(requestInfo,fileName)
+listExtendByDoc = readExtendByDoc(requestInfo,fileName)
+print('listExtendByDoc:%s'%(listExtendByDoc))
 #事项2：读取已存在的保险公用代码及薪资公用代码 更新公用代码群组时会自动调用
 #listPublicGroupName = queryPublicGroup(requestInfo)
 #事项3：新增公用代码群组 更新公用代码群组时会自动调用
 #resAddPublicGroup = addPublicGroup(driver,requestInfo,'薪资公用代码','test002')
 #事项4：更新公用代码群组
 #updatePublicGroupByDoc(driver,requestInfo,listPublicByDoc)
-addSingleExtendGroup = {'codeItem': [{'列字段名称': '人员险种', '数据关联': '人员险种(人事同步)', '是否必填': '是', '数据类型': '文本', '显示方式': '选择框', '序号': '1'}, {'列字段名称': '财务代码', '数据关联': '', '是否必填': '是', '数据类型': '文本', '显示方式': '文本框', '序号': '2'}], 'extendDesc': '为费用凭证报表产品代码列维护员工险种编码与财务码对应关系，维护在根组织（0总公司）上。', 'extendType': '组织业务数据', 'extendName': '员工险种-财务码', 'repeatLimit': '无限制'}
-addSingleExtendDetail = addSingleExtendGroup.get('codeItem')[0]
+#addSingleExtendGroup = {'codeItem': [{'列字段名称': '人员险种', '数据关联': '人员险种(人事同步)', '是否必填': '是', '数据类型': '文本', '显示方式': '选择框', '序号': '1'}, {'列字段名称': '财务代码', '数据关联': '', '是否必填': '是', '数据类型': '文本', '显示方式': '文本框', '序号': '2'}], 'extendDesc': '为费用凭证报表产品代码列维护员工险种编码与财务码对应关系，维护在根组织（0总公司）上。', 'extendType': '组织业务数据', 'extendName': '员工险种-财务码', 'repeatLimit': '无限制'}
+#addSingleExtendDetail = addSingleExtendGroup.get('codeItem')[0]
 #addExtendGroup(driver,requestInfo,addSingleExtendGroup,listExtendGroupName)
-#queryExtendGroup(requestInfo)
-listExtendDetail = queryExtendDetail(requestInfo,'90184dd3-25ba-4475-a15a-ab5e0811071d')
+#事项5：查询业务数据群组
+#listExtendGroup = queryExtendGroup(requestInfo)
+#事项6：查询业务数据群组明细 根据业务数据群组ID
+#listExtendDetail = queryExtendDetail(requestInfo,'90184dd3-25ba-4475-a15a-ab5e0811071d')
+#事项7：添加业务数据明细 向指定的业务数据群组ID
+#addExtendDetail(driver,requestInfo,addSingleExtendDetail,listExtendDetail,'90184dd3-25ba-4475-a15a-ab5e0811071d')
+#事项5：更新公用代码明细
+#importPublicCodeDetail(driver,requestInfo,listExtendByDoc,listPublicByDoc)
+#事项6：更新业务数据群组 根据文档
+#updateExtendGroup(driver,requestInfo,listExtendByDoc)
+#事项7：更新辅助函数
+#updateFormula(driver,requestInfo)
+#事项8：更新自定义程序池
+#updatePool(driver,requestInfo)
 
-addExtendDetail(driver,requestInfo,addSingleExtendDetail,listExtendDetail,'90184dd3-25ba-4475-a15a-ab5e0811071d')
 
 t2 = time.clock()
 print ("the project costs %.9fs"%(t2-t1))

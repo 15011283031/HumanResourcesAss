@@ -20,7 +20,18 @@ function updateExtendGroup() {
 	var action = $("#btnupdateExtendGroup").val()
 	document.getElementById("__Action").value = action;
 } 
-
+function updateFormu() {
+	var CFGAction = $("#btnupdateFormu").val()
+	document.getElementById("__CFGAction").value = CFGAction;
+}
+function updatePool() {
+	var CFGAction = $("#btnupdatePool").val()
+	document.getElementById("__CFGAction").value = CFGAction;
+}
+function updateFormual() {
+	var CFGAction = $("#btnupdateFormual").val()
+	document.getElementById("__CFGAction").value = CFGAction;
+}
 
 </script>
 
@@ -46,13 +57,13 @@ function updateExtendGroup() {
 </header>
 <div class='bg-title-content'>
 	<div class='bg-logon-content leftcontent minwidth'>
-	<form action='updatePayroll/' method="POST">
+	<form id='form1' action='updatePayroll/' method="POST">
 	<input type="hidden" name="__Action" id="__Action" value="" />
 	
 	<table id="Table3" class='dtNAV'>
 		<tr>
         	<td class='TD1'>规格文件地址</td>
-        	<td class='TD2'><input name="filename" maxlength="40" id="filename" class="TextBox normal-text" style="width:200px;" type="text">
+        	<td class='TD2'><input name="filename" maxlength="40" id="filename" class="TextBox normal-text" style="width:200px;" type="text"/>
         	 </td>	
       	</tr>
 	</table>
@@ -64,7 +75,28 @@ function updateExtendGroup() {
         </tr>
     </table>
 	</form>
-	</div>	
+	</div>
+	
+	<div class='bg-logon-content leftcontent minwidth'>
+	<form id='form2' action='updateFormuAbout/' method="POST">
+	<input type="hidden" name="__CFGAction" id="__CFGAction" value="" />
+	<table id="Table4" class='dtNAV'>
+		<tr>
+        	<td class='TD1'>配置文件地址</td>
+        	<td class='TD2'><input name="cfgfilename" maxlength="40" id="cfgfilename" class="TextBox normal-text" style="width:200px;" type="text"/>
+        	 </td>	
+      	</tr>
+	</table>
+	<table class='dtBread'>
+        <tr>
+            <td><input class='contentbutton autowidth' name="btnupdateFormu" value="更新辅助函数" id="btnupdateFormu" type="submit" onclick="updateFormu()"/></td>
+            <td><input class='contentbutton autowidth' name="btnupdatePool" value="更新程序池" id="btnupdatePool" type="submit" onclick="updatePool();"/></td> 
+            <td><input class='contentbutton autowidth' name="btnupdateFormual" value="更新公式" id="btnupdateFormual" type="submit" onclick="updateFormual();"/></td>   
+        </tr>
+    </table>
+	</form>
+	</div>
+		
 </div>
 
 <script type="text/javascript" src="{% static 'gurujs/scripts.js' %}"></script>
@@ -73,5 +105,9 @@ function updateExtendGroup() {
     var defaultFileName = {{defaultFileName|safe}}
     document.getElementById("filename").value = defaultFileName;   
 </script>
+<script>
+	var defaultCFGFileName = {{defaultCFGFileName|safe}}
+    document.getElementById("cfgfilename").value = defaultCFGFileName;  
+	</script>
 </body>
 </html>

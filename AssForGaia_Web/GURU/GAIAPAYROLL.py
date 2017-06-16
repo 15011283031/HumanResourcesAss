@@ -22,6 +22,10 @@ import http.cookiejar as cookielib
 import urllib.parse
 import json #json数据格式，用于写入数据库链接配置信息
 from types import CodeType
+import xlwt
+#正则匹配文本
+import re
+import xlrd
 
 t1 = time.clock()
 
@@ -271,6 +275,7 @@ def queryExtendGroup(requestInfo):
     needurl = requestInfo.rooturl + r'/ePayroll/PayrollParameterSetting/ExtendDataGroupSetting.aspx'    
     content = requestInfo.http.request(uri = needurl,method = 'GET', headers=requestInfo.headers)[1]
     readSoup = bs.BeautifulSoup(content.decode(),'lxml')
+    #print(readSoup)
     singletr = readSoup.find('thead',class_='ig_e531842b_r1 WebGridText ig_e531842b_r4').find('tr')
     extendNamelist = [singletd.find('nobr').string for singletd in singletr.find_all('th')].copy()
     extendValuelist = []
@@ -402,13 +407,259 @@ def addExtendDetail(driver,requestInfo,addSingleExtendDetail,listExtendDetail,gr
             driver.switch_to_alert().accept()
     else:
         print('addExtendDetailName:%s is null,Add ignore!'%(addExtendDetailName))        
+def importPublicCodeDetail(driver,requestInfo,listExtendByDoc,listPublicByDoc):
+    listExtendGroup = queryExtendGroup(requestInfo)
+    pc_ExtendGroup = {'repeatLimit': '无限制', 'extendName': '更新公用代码明细', 'extendDesc': 'Sys config for update publiccodeitem', 'extendType': '组织业务数据', 'codeItem': [{'列字段名称': '公用代码类型', '显示方式': '文本框', '数据类型': '文本', '是否必填': '否', '数据关联': '', '序号': '1'}, {'列字段名称': '公用代码编号', '显示方式': '文本框', '数据类型': '文本', '是否必填': '否', '数据关联': '', '序号': '2'},{'列字段名称': '公用代码名称', '显示方式': '文本框', '数据类型': '文本', '是否必填': '否', '数据关联': '', '序号': '3'}]}
+    #firt step:add extend group
+    addExtendGroup(driver,requestInfo,pc_ExtendGroup,listExtendGroup)
+    #second step:add extend detail
+    listExtendGroup = queryExtendGroup(requestInfo)
+    pc_SysExtendGroup = [singleExtendGroup for singleExtendGroup in listExtendGroup if singleExtendGroup.get('群组名称')==pc_ExtendGroup.get('extendName')]
+    pc_ExtendDetail = pc_ExtendGroup.get('codeItem')
+    pc_SysExtendGroup_GroupID = pc_SysExtendGroup[0].get('群组编号')
+    pc_SysExtendGroup_ExtendDetail = queryExtendDetail(requestInfo,pc_SysExtendGroup_GroupID)
+    if pc_ExtendDetail is not None and len(pc_ExtendDetail) > 0:
+        for single_pc_ExtendDetail in pc_ExtendDetail:
+            addExtendDetail(driver,requestInfo,single_pc_ExtendDetail,pc_SysExtendGroup_ExtendDetail,pc_SysExtendGroup_GroupID)    
+    #third step:download template
+    needurl = requestInfo.rooturl + r'/ePayroll/PersonalPayrollInformationManage/OrgBusinessDataImport.aspx'
+    driver.get(needurl)
+    time.sleep(2)
+    driver.find_element_by_xpath("//select[@id='drpGroup']/option[@title='"+ pc_ExtendGroup.get('extendName') +"']").click()
+    driver.find_element_by_id('btnQuery').click()
+    time.sleep(2)
+    driver.find_element_by_xpath("//select[@class='pager-sizes']/option[@title='200']").click()
+    time.sleep(2)
+    tmpPageSource = driver.page_source    
+    readSoup = bs.BeautifulSoup(tmpPageSource,"html.parser")
+    recordTotalNum =readSoup.find(id = 'grdNavigator_lblRecordsCount').string
+    totalPagesNum = int(int(recordTotalNum)/200)
+    for i in range(totalPagesNum):
+        driver.find_element_by_id('btnQuery').click()
+        time.sleep(2)
+        driver.find_element_by_id('chkAll').click()
+        time.sleep(2)
+        driver.find_element_by_id('btnDelete').click()
+        time.sleep(2)
+        msg = driver.switch_to_alert().text
+        print(msg)
+        driver.switch_to_alert().accept()
+    driver.find_element_by_id('downTemplate').click()   
+    time.sleep(2)
+    now_handle = driver.current_window_handle
+    all_handles = driver.window_handles
+    for handle in all_handles:
+        if handle in driver.window_handles:
+            driver.switch_to_window(handle)
+            if driver.current_window_handle == now_handle:
+                pass
+            else:
+                driver.close()     
+        else:
+            pass
+    driver.switch_to_window(now_handle)
+    tmpPageSource = driver.page_source    
+    readSoup = bs.BeautifulSoup(tmpPageSource,"html.parser")
+    downLoadUrl = requestInfo.rooturl + re.findall(r"/CommonPage.*\.xls",str(readSoup))[0]
+    response,content = requestInfo.http.request(uri = downLoadUrl,method = 'POST', headers=requestInfo.headers)
+    readSoup = bs.BeautifulSoup(content.decode('utf-8'),"html.parser")
+    trueLoadUrl = requestInfo.rooturl + re.findall(r"/DownLoadDir.*\.xls",str(readSoup))[0]
+    #print(content.decode('utf-8'))
+    filename = requestInfo.tmpFilePath + r'/ImportExtendDataForPublicCodeUpdate.xml'
+    newfilename = requestInfo.tmpFilePath + r'\NewdataExtendDataForPublicCodeUpdate.xml'
+    urllib.request.urlretrieve(url=trueLoadUrl, filename=filename)
+    
+    #for singleExtend in listExtendByDoc:
+    row_former = '<ss:Row>\r\n' 
+    col_former = '<ss:Cell>\r\n<ss:Data ss:Type="String">'
+    row_end = '</ss:Row>\r\n'
+    col_end = '</ss:Data>\r\n</ss:Cell>\r\n'                  
+    defaultOrgCode = '01'
+    defaultEffectDate = '2015-01-01'
+    addContent = ''
+    i = 1 #从第二行开始
+    for sinPC in listPublicByDoc:
+        print('sinPC:%s'%(sinPC))
+        PCType = sinPC.get('codeType')
+        PCName = sinPC.get('codeName')
+        listCodeItem = sinPC.get('codeItem') 
+        if PCType in ['薪资公用代码','保险共用代码']:
+            for sinItem in listCodeItem:
+                print('sinItem:%s'%(sinItem))
+                itemID = sinItem.get('codeItemID')
+                itemValue = sinItem.get('codeItemValue')
+                addContent = addContent + row_former + col_former + col_end   
+                addContent = addContent + col_former + defaultOrgCode + col_end 
+                addContent = addContent + col_former + defaultEffectDate + col_end 
+                addContent = addContent + col_former + PCName + col_end 
+                addContent = addContent + col_former + itemID + col_end 
+                addContent = addContent + col_former + itemValue + col_end + row_end
+    #print('addContent:%s'%(addContent))
+     
+    fileobject = open(filename,'rb')
+    fileReadContent = fileobject.readlines()
+    fileobject.close()
+    sheetState = 0
+    tableState = 0
+    fileobject = open(newfilename,'wb')
+    for line in fileReadContent:
+        lineContent = line.decode('utf-8')
+        #print('lineContent:%s'%(lineContent))         
+        if  sheetState == 0:      
+            if  r'Worksheet' in lineContent and r'OrgBusinessDataImport' in lineContent:
+                sheetState = 1
+        elif sheetState > 0:
+            if  r'<ss:Table>' in lineContent:
+                tableState = 1 
+            if  r'</ss:Worksheet>' in lineContent:
+                sheetState = 0
+            if tableState > 0 :
+                if  r'</ss:Table>' in lineContent:
+                    tableState = 0
+                    line = addContent.encode('utf-8') + line
+                    
+                else:
+                    pass
+        #print('sheetState:%s'%(sheetState)) 
+        #print('tableState:%s'%(tableState))         
+        #print('line:%s'%(line))        
+        fileobject.write(line)            
+    fileobject.close()            
 
+    
+    needurl = requestInfo.rooturl + r'/ePayroll/PersonalPayrollInformationManage/OrgBusinessDataImportAction.aspx?GroupId=' + pc_SysExtendGroup_GroupID
+    driver.get(needurl)
+    time.sleep(2)
+    driver.find_element_by_id('lblimportdata').click()
+    time.sleep(2)
+    driver.find_element_by_id('ucUploadFile_myFile').send_keys(newfilename)
+    driver.find_element_by_id('ucUploadFile_btnImput').click()
+    time.sleep(2)
+    driver.find_element_by_id('btnSave').click()
+def updateExtendGroup(driver,requestInfo,listExtendByDoc):
+    listExtendGroup = queryExtendGroup(requestInfo)
+    for sinExtend in listExtendByDoc:
+        addExtendGroup(driver,requestInfo,sinExtend,listExtendGroup)
+    listExtendGroup = queryExtendGroup(requestInfo)
+    for cur_ExtendGroup in listExtendByDoc:
+        cur_SimExtendGroup = [singleExtendGroup for singleExtendGroup in listExtendGroup if singleExtendGroup.get('群组名称')==cur_ExtendGroup.get('extendName')]
+        cur_ExtendDetail = cur_ExtendGroup.get('codeItem')
+        print('cur_ExtendGroup:%s'%(cur_ExtendGroup))  
+        cur_ExtendGroup_GroupID = cur_SimExtendGroup[0].get('群组编号')
+        cur_ExtendGroup_ExtendDetail = queryExtendDetail(requestInfo,cur_ExtendGroup_GroupID)
+        if cur_ExtendDetail is not None and len(cur_ExtendDetail) > 0:
+            for sin_cur_ExtendDetail in cur_ExtendDetail:
+                addExtendDetail(driver,requestInfo,sin_cur_ExtendDetail,cur_ExtendGroup_ExtendDetail,cur_ExtendGroup_GroupID) 
+def queryFormula(driver,requestInfo,CFGfilename):
+    
+    workbook = xlrd.open_workbook(CFGfilename)
+    ws = workbook.sheet_by_name('OPT010薪资函数')
+    rowlen,collen = ws.usp_get_len()
+    tablename = []
+    tablecontent = []
+    for i in range(rowlen):
+        rowcontent = []
+        for j in range(collen):
+            if i == 0:
+                cellcontent = ws.cell(i,j).value
+                tablename.append(ws.cell(i,j).value )
+            else:
+                cellcontent = ws.cell(i,j).value
+                rowcontent.append(ws.cell(i,j).value)
+        if i != 0:        
+            tablecontent.append(rowcontent.copy())
+    i = 0
+    tableFormu = []
+    dictFormu = {}
+    for sinFor in tablecontent:
+        #print('sinFor:%s'%(sinFor))
+        for i in range(len(tablename)):
+            dictFormu[tablename[i]] = sinFor[i]
+        tableFormu.append(dictFormu.copy())
+    print('tableFormu:%s'%(tableFormu))
+    return tableFormu
+
+def updateFormula(driver,requestInfo,listFormuByDoc):       
+    needurl = requestInfo.rooturl + r'/ePayroll/PayrollParameterSetting/PayrollScriptEdit.aspx?optype=add&addtype=FUNCTIONASSISTANTKEY'
+    driver.get(needurl)   
+    for sinForm in listFormuByDoc:
+        formu_name = sinForm.get('名称')
+        formu_usetype = sinForm.get('使用状态')
+        formu_type = sinForm.get('类型')
+        formu_enname = sinForm.get('调用代码')
+        formu_code = sinForm.get('函数内容')
+        formu_help = sinForm.get('帮助')            
+        if formu_usetype == '使用中' and formu_type == '辅助函数':
+            driver.get(needurl) 
+            time.sleep(2)
+            driver.find_element_by_id('txtName').send_keys(formu_name)
+            driver.find_element_by_id('txtInnerName').send_keys(formu_enname)
+            driver.find_element_by_id('txtContent').send_keys(formu_code)
+            driver.find_element_by_id('txtHelper').send_keys(formu_help)
+            driver.find_element_by_id('btnSave').click()
+            time.sleep(2)
+            try:
+                msg = driver.switch_to_alert().text
+            except(Exception):
+                print('no msg formu_name:%s'%(formu_name))
+            else:
+                if msg == '新增成功':
+                    print('Add Success formu_name：%s'%(formu_name))
+                    driver.switch_to_alert().accept()
+                else:
+                    print('Add Failed formu_name:%s;Because of:%s'%(formu_name,msg))
+                    driver.switch_to_alert().accept()
+        else:
+            print('other type formu_name%s'%(formu_name)) 
+def updatePool(driver,requestInfo,listFormuByDoc):  
+    needurl = requestInfo.rooturl + r'/ePayroll/PayrollParameterSetting/PayCustomDataPoolDetail.aspx' 
+    driver.get(needurl)
+  
+    for sinForm in listFormuByDoc:
+        formu_name = sinForm.get('名称')
+        formu_usetype = sinForm.get('使用状态')
+        formu_type = sinForm.get('类型')
+        formu_enname = sinForm.get('调用代码')
+        formu_code = sinForm.get('函数内容')
+        formu_help = sinForm.get('帮助')   
+        if formu_usetype == '使用中' and formu_type == '自定义数据池': 
+            driver.get(needurl) 
+            time.sleep(2)
+            driver.find_element_by_id('txtName').send_keys(formu_name)
+            driver.find_element_by_id('txtInvokeScript').send_keys(formu_enname)
+            driver.find_element_by_id('txtScript').send_keys(formu_code)
+            driver.find_element_by_id('txtNote').send_keys(formu_help)
+            driver.find_element_by_id('chkAvailable').click()
+            driver.find_element_by_id('btnSave').click()
+            time.sleep(2)
+            try:
+                msg = driver.switch_to_alert().text
+            except(Exception):
+                print('no msg formu_name:%s'%(formu_name))
+            else:
+                if msg == '新增成功':
+                    print('Add Success formu_name：%s'%(formu_name))
+                    driver.switch_to_alert().accept()
+                else:
+                    print('Add Failed formu_name:%s;Because of:%s'%(formu_name,msg))
+                    driver.switch_to_alert().accept()
+        else:
+            print('other type formu_name%s'%(formu_name))
+
+    
 def GAIAPAYROLL(request):
     '''request for payroll '''
-    defaultFileName = r'E:\工作文档\1608-中银\06业务流程分析\薪资管理\test.docx'  
+    defaultFileName = r'E:\工作文档\1608-中银\06业务流程分析\薪资管理\test.docx' 
+    defaultCFGFileName = r'E:\工作文档\1608-中银\00汇总文档\T0005中银-系统配置记录.xlsx' 
+    
+     
     return render_to_response('GURU/GAIAPAYROLL.html',{
-        'defaultFileName':json.dumps(defaultFileName)
+        'defaultFileName':json.dumps(defaultFileName),'defaultCFGFileName':json.dumps(defaultCFGFileName)
     })
+
+      
+    
+    
 def web_updatePublicGroupByDoc(request):
     if request.method == "POST": 
         action =  request.POST.get('__Action')
@@ -445,13 +696,71 @@ def web_updatePublicGroupByDoc(request):
             driver = createDriver(requestInfo)
             listPublicByDoc = readPublicByDoc(requestInfo,filename)
             updatePublicGroupByDoc(driver,requestInfo,listPublicByDoc)
+            driver.close()
         elif action == '导入公用代码明细':
+            resLogin = loginInSystem(requestInfo)
+            driver = createDriver(requestInfo)
+            listExtendByDoc = readExtendByDoc(requestInfo,filename)
+            listPublicByDoc = readPublicByDoc(requestInfo,filename)
+            importPublicCodeDetail(driver,requestInfo,listExtendByDoc,listPublicByDoc)
+            driver.close()
             pass
         elif action == '更新业务数据':
+            resLogin = loginInSystem(requestInfo)
+            driver = createDriver(requestInfo)
+            listExtendByDoc = readExtendByDoc(requestInfo,filename)
+            updateExtendGroup(driver,requestInfo,listExtendByDoc)
+            driver.close()
+            pass
+            
+        return HttpResponseRedirect("/GURU/GAIAPAYROLL/") 
+def web_updateFormuAbout(request):
+    if request.method == "POST": 
+        action =  request.POST.get('__CFGAction')
+        print('action:%s'%(action))
+        CFGfilename =  request.POST.get('cfgfilename')
+        print('CFGfilename:%s'%(CFGfilename))
+        cookie = cookielib.CookieJar()
+        handler = urllib.request.HTTPCookieProcessor(cookie)
+        CookieOpener = urllib.request.build_opener(handler)
+        headers = {}
+        headers['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+        headers['Accept-Encoding'] = 'deflate'
+        headers['Accept-Language'] = 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3'
+        headers['Connection'] = 'keep-alive'
+        headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0'
+        
+        webSourceInfo = updateWebSource.classReadWebSouce()  
+        dbSourceInfo = updateLogin.readConn()
+        
+        rooturl = webSourceInfo.getRooturl()
+        host = webSourceInfo.getHost()
+        port = webSourceInfo.getPort()
+        webname = webSourceInfo.getWebname()
+        webpsw = webSourceInfo.getWebpsw()
+        tmpFilePath = r'E:\KM\GITPROJECT\HumanResourcesAss\AssForGaia\src\Guru\tmpfile'
+        showMode = r'show'
+        loginurl = rooturl + r'/Account/Logon?'
+        http = httplib2.Http()
+        requestInfo = UrlRequest(rooturl=rooturl,host=host,port=port,webname=webname,webpsw=webpsw,tmpFilePath=tmpFilePath,showMode=showMode,cookie=cookie,headers=headers,loginurl=loginurl,CookieOpener=CookieOpener,http=http)
+        
+        
+        if action == '更新辅助函数':
+            resLogin = loginInSystem(requestInfo)
+            driver = createDriver(requestInfo)
+            listFormuByDoc = queryFormula(driver,requestInfo,CFGfilename)
+            updateFormula(driver,requestInfo,listFormuByDoc)
+            driver.close()
+        elif action == '更新程序池':
+            resLogin = loginInSystem(requestInfo)
+            driver = createDriver(requestInfo)
+            listFormuByDoc = queryFormula(driver,requestInfo,CFGfilename)
+            updatePool(driver,requestInfo,listFormuByDoc)
+            driver.close()
+        elif action == '更新公式':
             pass
         
         return HttpResponseRedirect("/GURU/GAIAPAYROLL/") 
-
 
 #resLogin = loginInSystem(requestInfo)
 #driver = createDriver(requestInfo)
