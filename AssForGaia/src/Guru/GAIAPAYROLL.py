@@ -617,12 +617,57 @@ def updateFormula(driver,requestInfo,listFormuByDoc):
         else:
             print('other type formu_name%s'%(formu_name)) 
     
+def addInsArea(driver,requestInfo,sinInsArea):
+    needurl = requestInfo.rooturl + r'/ePayroll/PayrollParameterSetting/InsureSystemSetEdit.aspx'
+    driver.get(needurl)
+    time.sleep(2)
+    driver.find_element_by_id('txtAreaName').send_keys(sinInsArea)
+    time.sleep(2)
+    driver.find_element_by_id('btnAdd').click()
+    try:
+        msg = driver.switch_to_alert().text
+    except(Exception):
+        print('no msg sinInsArea:%s'%(sinInsArea))
+    else:
+        if msg == '新增成功':
+            print('Add Success sinInsArea：%s'%(sinInsArea))
+            driver.switch_to_alert().accept()
+        else:
+            print('Add Failed sinInsArea:%s;Because of:%s'%(sinInsArea,msg))
+            driver.switch_to_alert().accept()
+    time.sleep(2)
+def queryInsArea(requestInfo):
+    listInsArea = []
+    needurl = requestInfo.rooturl + r'/ePayroll/PayrollParameterSetting/InsureSystemSet.aspx'    
+    content = http.request(uri = needurl,method = 'GET', headers=requestInfo.headers)[1]
+    readSoup = bs.BeautifulSoup(content.decode(),'lxml')
+    listInsArea = listInsArea + [singleGroup.find_all('span')[2].string for singleGroup in readSoup.find('div',id='M_TreeInsureArea_1').find_all('div') if len(singleGroup.find_all('span')[2].string)>0].copy()     
+    print('listInsArea:%s'%(listInsArea))
+    return   listInsArea  
+def updateInsAreaByDoc(driver,requestInfo,list_InsArea_ByDoc):
+    list_InsArea_Sys = queryInsArea(requestInfo)
+    for sin_InsArea_ByDoc in list_InsArea_ByDoc:
+        if sin_InsArea_ByDoc in list_InsArea_Sys:
+            print('sin_InsArea_ByDoc %s in list_InsArea_Sys,Add ignore!'%(sin_InsArea_ByDoc))
+        elif len(sin_InsArea_ByDoc) > 0:
+            addInsArea(driver,requestInfo,sin_InsArea_ByDoc)
+    print('updateInsAreaByDoc End:%s'%(list_InsArea_ByDoc))
+def queryInsAreaID(driver,requestInfo):
+    listInsArea = queryInsArea(requestInfo)
+    needurl = requestInfo.rooturl + r'/ePayroll/PayrollParameterSetting/InsureSystemSet.aspx' 
+    for i in range(len(listInsArea)):
+        driver.get(needurl)
+        time.sleep(2)
+        driver.find_element_by_xpath("//div[@id='TreeInsureArea_1_"+ str(i + 1) +"']/span[3]").click()
+        time.sleep(2)
+        tmpPageSource = driver.page_source    
+        readSoup = bs.BeautifulSoup(tmpPageSource,"html.parser")
+        systemid =readSoup.find(id = 'txtSystemID')
+        print('i:%s'%(i))
+        print('readSoup:%s'%(readSoup))
         
-            
-            
-    #firt step:add extend group
-    #addExtendGroup(driver,requestInfo,pc_ExtendGroup,listExtendGroup)
-    pass    
+        
+    
  
 def projectend():
     pass   
@@ -681,6 +726,7 @@ print('listExtendByDoc:%s'%(listExtendByDoc))
 #事项8：更新自定义程序池
 #updatePool(driver,requestInfo)
 
-
+#queryInsArea(requestInfo)
+queryInsAreaID(driver,requestInfo)
 t2 = time.clock()
 print ("the project costs %.9fs"%(t2-t1))

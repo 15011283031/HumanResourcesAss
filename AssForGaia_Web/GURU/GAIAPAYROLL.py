@@ -158,6 +158,7 @@ def createDriver(requestInfo):
     time.sleep(2)
     driver.find_element_by_id('account_INPUT_IDENTITY').send_keys(requestInfo.webname)
     driver.find_element_by_id('password').send_keys(requestInfo.webpsw)
+    time.sleep(2)
     driver.find_element_by_class_name('btn-lg').click()
     time.sleep(2)
     return driver
@@ -252,13 +253,17 @@ def addPublicGroup(driver,requestInfo,codeType,addPublicGroupName,listPublicGrou
             time.sleep(2)
             driver.find_element_by_id('cmdAdd').click()
             time.sleep(2)
-            message = driver.switch_to_alert().text
-            if message == '新增成功！':
-                print('Group Add Success:%s'%(addPublicGroupName))
-                driver.switch_to_alert().accept()
+            try:
+                message = driver.switch_to_alert().text
+            except(Exception):
+                print('no message')
             else:
-                print('Group Add Failed:%s,Because of:%s'%(addPublicGroupName,message))
-                driver.switch_to_alert().accept()
+                if message == '新增成功！':
+                    print('Group Add Success:%s'%(addPublicGroupName))
+                    driver.switch_to_alert().accept()
+                else:
+                    print('Group Add Failed:%s,Because of:%s'%(addPublicGroupName,message))
+                    driver.switch_to_alert().accept()
         else:
             print('codeTypeValue is None or addPublicGroupName:%s is null,Add ignore!'%(addPublicGroupName))
 def updatePublicGroupByDoc(driver,requestInfo,listPublic):
@@ -292,16 +297,34 @@ def queryExtendGroup(requestInfo):
         print('No extend group list')      
     print('listExtendGroup:%s'%(listExtendGroup))
     return listExtendGroup
-def queryExtendDetail(requestInfo,groupID):
+def queryExtendDetail(driver,requestInfo,groupID):
     listExtendDetail = [] 
     needurl = requestInfo.rooturl + r'/ePayroll/PayrollParameterSetting/ExtendDataGroupSettingDetail.aspx?GroupID=' +  groupID   
-    content = requestInfo.http.request(uri = needurl,method = 'GET', headers=requestInfo.headers)[1]
-    readSoup = bs.BeautifulSoup(content.decode(),'lxml')
+    driver.get(needurl)
+    time.sleep(2)
+    driver.find_element_by_xpath("//select[@class='pager-sizes']/option[@title='200']").click()
+    time.sleep(2)
+    tmpPageSource = driver.page_source    
+    readSoup = bs.BeautifulSoup(tmpPageSource,"html.parser")
+    recordTotalNum =readSoup.find(id = 'grdNavigator_lblRecordsCount').string
+    totalPagesNum = int(int(recordTotalNum)/200)
+    time.sleep(2)
+    tmpPageSource = driver.page_source    
+    readSoup = bs.BeautifulSoup(tmpPageSource,'lxml')
     singletr = readSoup.find('thead',class_='ig_e531842b_r1 WebGridText ig_e531842b_r4').find('tr')
-    extendDetailNamelist = [singletd.find('nobr').string for singletd in singletr.find_all('th')].copy()
     extendDetailValuelist = []
+    extendDetailNamelist = [singletd.find('nobr').string for singletd in singletr.find_all('th') if singletd.find('nobr') is not None].copy()
     for singletr in readSoup.find('tbody',class_='ig_e531842b_r1 WebGridText ig_e531842b_r4').find_all('tr'):
         extendDetailValuelist.append([singletd.find('nobr').string for singletd in singletr.find_all('td')].copy())
+    i = 1    
+    for i in range(totalPagesNum):
+        driver.find_element_by_class_name()('pager-btn pager-icon pager-next').click()
+        time.sleep(2)
+        tmpPageSource = driver.page_source    
+        readSoup = bs.BeautifulSoup(tmpPageSource,'lxml')
+        for singletr in readSoup.find('tbody',class_='ig_e531842b_r1 WebGridText ig_e531842b_r4').find_all('tr'):
+            extendDetailValuelist.append([singletd.find('nobr').string for singletd in singletr.find_all('td')].copy())
+            
     if  len(extendDetailValuelist) > 0: 
         for singleExtendDetailValue in extendDetailValuelist:
             singleExtendDetail = {}
@@ -313,7 +336,15 @@ def queryExtendDetail(requestInfo,groupID):
         print('No extend detail list')      
     print('listExtendDetail:%s'%(listExtendDetail))
     return listExtendDetail
-
+    '''
+    content = requestInfo.http.request(uri = needurl,method = 'GET', headers=requestInfo.headers)[1]
+    readSoup = bs.BeautifulSoup(content.decode(),'lxml')
+    singletr = readSoup.find('thead',class_='ig_e531842b_r1 WebGridText ig_e531842b_r4').find('tr')
+    extendDetailNamelist = [singletd.find('nobr').string for singletd in singletr.find_all('th')].copy()
+    extendDetailValuelist = []
+    for singletr in readSoup.find('tbody',class_='ig_e531842b_r1 WebGridText ig_e531842b_r4').find_all('tr'):
+        extendDetailValuelist.append([singletd.find('nobr').string for singletd in singletr.find_all('td')].copy())
+    '''
               
 def addExtendGroup(driver,requestInfo,addSingleExtendGroup,listExtendGroup):  
     addExtendGroupName = addSingleExtendGroup.get('extendName')
@@ -339,16 +370,20 @@ def addExtendGroup(driver,requestInfo,addSingleExtendGroup,listExtendGroup):
             driver.find_element_by_id('rlType_1').click()
         else:
             print('Group type :%s is not variable!'%(addExtendGroupType))
+        time.sleep(2)
         driver.find_element_by_id('btnAdd').click()
         time.sleep(2)
-        message = driver.switch_to_alert().text
-        print(message)
-        if message == '新增成功！':
-            print('Group Add Success:%s'%(addExtendGroupName))
-            driver.switch_to_alert().accept()
+        try:
+            message = driver.switch_to_alert().text
+        except(Exception):
+            print('no message')
         else:
-            print('Group Add Failed:%s,Because of:%s'%(addExtendGroupName,message))
-            driver.switch_to_alert().accept()
+            if message == '新增成功！':
+                print('Group Add Success:%s'%(addExtendGroupName))
+                driver.switch_to_alert().accept()
+            else:
+                print('Group Add Failed:%s,Because of:%s'%(addExtendGroupName,message))
+                driver.switch_to_alert().accept()
     else:
         print('addExtendGroupName:%s is null,Add ignore!'%(addExtendGroupName))
 def addExtendDetail(driver,requestInfo,addSingleExtendDetail,listExtendDetail,groupID):        
@@ -394,17 +429,21 @@ def addExtendDetail(driver,requestInfo,addSingleExtendDetail,listExtendDetail,gr
         addExtendDetailPublicCode = addSingleExtendDetail.get('数据关联') 
         if  addExtendDetailShowMode == '选择框' and addExtendDetailPublicCode is not None and len(addExtendDetailPublicCode) > 0: 
             driver.find_element_by_xpath("//select[@id='drpPublicCode']/option[@title='"+ addExtendDetailPublicCode +"']").click()
-    
+        time.sleep(2)
         driver.find_element_by_id('btnAdd').click()
         time.sleep(2)
-        message = driver.switch_to_alert().text
-        print(message)
-        if message == '新增成功！':
-            print('GroupDetail Add Success:%s'%(addExtendDetailName))
-            driver.switch_to_alert().accept()
+        try:
+            message = driver.switch_to_alert().text
+        except(Exception):
+            print('no message')
         else:
-            print('GroupDetail Add Failed:%s,Because of:%s'%(addExtendDetailName,message))
-            driver.switch_to_alert().accept()
+            if message == '新增成功！':
+                print('GroupDetail Add Success:%s'%(addExtendDetailName))
+                driver.switch_to_alert().accept()
+            else:
+                print('GroupDetail Add Failed:%s,Because of:%s'%(addExtendDetailName,message))
+                driver.switch_to_alert().accept()
+        
     else:
         print('addExtendDetailName:%s is null,Add ignore!'%(addExtendDetailName))        
 def importPublicCodeDetail(driver,requestInfo,listExtendByDoc,listPublicByDoc):
@@ -417,7 +456,7 @@ def importPublicCodeDetail(driver,requestInfo,listExtendByDoc,listPublicByDoc):
     pc_SysExtendGroup = [singleExtendGroup for singleExtendGroup in listExtendGroup if singleExtendGroup.get('群组名称')==pc_ExtendGroup.get('extendName')]
     pc_ExtendDetail = pc_ExtendGroup.get('codeItem')
     pc_SysExtendGroup_GroupID = pc_SysExtendGroup[0].get('群组编号')
-    pc_SysExtendGroup_ExtendDetail = queryExtendDetail(requestInfo,pc_SysExtendGroup_GroupID)
+    pc_SysExtendGroup_ExtendDetail = queryExtendDetail(driver,requestInfo,pc_SysExtendGroup_GroupID)
     if pc_ExtendDetail is not None and len(pc_ExtendDetail) > 0:
         for single_pc_ExtendDetail in pc_ExtendDetail:
             addExtendDetail(driver,requestInfo,single_pc_ExtendDetail,pc_SysExtendGroup_ExtendDetail,pc_SysExtendGroup_GroupID)    
@@ -426,6 +465,7 @@ def importPublicCodeDetail(driver,requestInfo,listExtendByDoc,listPublicByDoc):
     driver.get(needurl)
     time.sleep(2)
     driver.find_element_by_xpath("//select[@id='drpGroup']/option[@title='"+ pc_ExtendGroup.get('extendName') +"']").click()
+    time.sleep(2)
     driver.find_element_by_id('btnQuery').click()
     time.sleep(2)
     driver.find_element_by_xpath("//select[@class='pager-sizes']/option[@title='200']").click()
@@ -435,15 +475,19 @@ def importPublicCodeDetail(driver,requestInfo,listExtendByDoc,listPublicByDoc):
     recordTotalNum =readSoup.find(id = 'grdNavigator_lblRecordsCount').string
     totalPagesNum = int(int(recordTotalNum)/200)
     for i in range(totalPagesNum):
+        time.sleep(2)
         driver.find_element_by_id('btnQuery').click()
         time.sleep(2)
         driver.find_element_by_id('chkAll').click()
         time.sleep(2)
         driver.find_element_by_id('btnDelete').click()
         time.sleep(2)
-        msg = driver.switch_to_alert().text
-        print(msg)
-        driver.switch_to_alert().accept()
+        try:
+            msg = driver.switch_to_alert().text
+        except(Exception):
+            print('no message')
+        else:
+            driver.switch_to_alert().accept()       
     driver.find_element_by_id('downTemplate').click()   
     time.sleep(2)
     now_handle = driver.current_window_handle
@@ -533,9 +577,12 @@ def importPublicCodeDetail(driver,requestInfo,listExtendByDoc,listPublicByDoc):
     driver.find_element_by_id('lblimportdata').click()
     time.sleep(2)
     driver.find_element_by_id('ucUploadFile_myFile').send_keys(newfilename)
+    time.sleep(2)
     driver.find_element_by_id('ucUploadFile_btnImput').click()
     time.sleep(2)
     driver.find_element_by_id('btnSave').click()
+    time.sleep(2)
+    print('importPublicCodeDetail End')
 def updateExtendGroup(driver,requestInfo,listExtendByDoc):
     listExtendGroup = queryExtendGroup(requestInfo)
     for sinExtend in listExtendByDoc:
@@ -546,7 +593,7 @@ def updateExtendGroup(driver,requestInfo,listExtendByDoc):
         cur_ExtendDetail = cur_ExtendGroup.get('codeItem')
         print('cur_ExtendGroup:%s'%(cur_ExtendGroup))  
         cur_ExtendGroup_GroupID = cur_SimExtendGroup[0].get('群组编号')
-        cur_ExtendGroup_ExtendDetail = queryExtendDetail(requestInfo,cur_ExtendGroup_GroupID)
+        cur_ExtendGroup_ExtendDetail = queryExtendDetail(driver,requestInfo,cur_ExtendGroup_GroupID)
         if cur_ExtendDetail is not None and len(cur_ExtendDetail) > 0:
             for sin_cur_ExtendDetail in cur_ExtendDetail:
                 addExtendDetail(driver,requestInfo,sin_cur_ExtendDetail,cur_ExtendGroup_ExtendDetail,cur_ExtendGroup_GroupID) 
@@ -596,6 +643,7 @@ def updateFormula(driver,requestInfo,listFormuByDoc):
             driver.find_element_by_id('txtInnerName').send_keys(formu_enname)
             driver.find_element_by_id('txtContent').send_keys(formu_code)
             driver.find_element_by_id('txtHelper').send_keys(formu_help)
+            time.sleep(2)
             driver.find_element_by_id('btnSave').click()
             time.sleep(2)
             try:
@@ -630,6 +678,7 @@ def updatePool(driver,requestInfo,listFormuByDoc):
             driver.find_element_by_id('txtScript').send_keys(formu_code)
             driver.find_element_by_id('txtNote').send_keys(formu_help)
             driver.find_element_by_id('chkAvailable').click()
+            time.sleep(2)
             driver.find_element_by_id('btnSave').click()
             time.sleep(2)
             try:
@@ -645,7 +694,14 @@ def updatePool(driver,requestInfo,listFormuByDoc):
                     driver.switch_to_alert().accept()
         else:
             print('other type formu_name%s'%(formu_name))
-
+def queryInsArea(requestInfo):
+    listInsArea = []
+    needurl = requestInfo.rooturl + r'/ePayroll/PayrollParameterSetting/InsureSystemSet.aspx'    
+    content = http.request(uri = needurl,method = 'GET', headers=requestInfo.headers)[1]
+    readSoup = bs.BeautifulSoup(content.decode(),'lxml')
+    listInsArea = listInsArea + [singleGroup.find_all('span')[2].string for singleGroup in readSoup.find('div',id='M_TreeInsureArea_1').find_all('div') if len(singleGroup.find_all('span')[2].string)>0].copy()    
+    print('listInsArea:%s'%(listInsArea))  
+    
     
 def GAIAPAYROLL(request):
     '''request for payroll '''
