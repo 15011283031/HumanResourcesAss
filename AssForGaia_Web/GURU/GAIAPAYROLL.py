@@ -64,9 +64,7 @@ def requestNeedurlByJsonPost(needurl,postData,headers,host,port):
     conn = httplib.HTTPConnection(host,port)
     conn.request("POST", needurl, json.JSONEncoder().encode(postData), headers)
     response = conn.getresponse()
-
-
-
+    return response
 class UrlRequest:
     def __init__(self,rooturl,host,port,webname,webpsw,tmpFilePath,showMode,cookie,headers,loginurl,CookieOpener,http):
         self.rooturl = rooturl
@@ -225,7 +223,7 @@ def readExtendByDoc(requestInfo,fileName):
             extendContent.append(tableContent.copy())
     #print('extendContent:%s'%(extendContent))
     return  extendContent  
-def queryPublicGroup(requestInfo):
+def PublicGroup(requestInfo):
     listPublicGroupName = []
     needurl = requestInfo.rooturl + r'/ePayroll/PayrollParameterSetting/PayrollPublicCodeMaintain.aspx'    
     content = requestInfo.http.request(uri = needurl,method = 'GET', headers=requestInfo.headers)[1]
@@ -267,7 +265,7 @@ def addPublicGroup(driver,requestInfo,codeType,addPublicGroupName,listPublicGrou
         else:
             print('codeTypeValue is None or addPublicGroupName:%s is null,Add ignore!'%(addPublicGroupName))
 def updatePublicGroupByDoc(driver,requestInfo,listPublic):
-    listPublicGroupName = queryPublicGroup(requestInfo)
+    listPublicGroupName = PublicGroup(requestInfo)
     for singlePublic in listPublic:
         addPublicGroupCodeType = singlePublic.get('codeType')
         addPublicGroupName = singlePublic.get('codeName')
@@ -275,17 +273,39 @@ def updatePublicGroupByDoc(driver,requestInfo,listPublic):
             addPublicGroup(driver,requestInfo,addPublicGroupCodeType,addPublicGroupName,listPublicGroupName)
         else:
             print('for group:%s  Code Type is not 保险共用代码,薪资公用代码 ,add ignore'%(addPublicGroupName))
-def queryExtendGroup(requestInfo):
+def queryExtendGroup(driver,requestInfo):
     listExtendGroup = []
-    needurl = requestInfo.rooturl + r'/ePayroll/PayrollParameterSetting/ExtendDataGroupSetting.aspx'    
+    needurl = requestInfo.rooturl + r'/ePayroll/PayrollParameterSetting/ExtendDataGroupSetting.aspx'
     content = requestInfo.http.request(uri = needurl,method = 'GET', headers=requestInfo.headers)[1]
     readSoup = bs.BeautifulSoup(content.decode(),'lxml')
-    #print(readSoup)
-    singletr = readSoup.find('thead',class_='ig_e531842b_r1 WebGridText ig_e531842b_r4').find('tr')
-    extendNamelist = [singletd.find('nobr').string for singletd in singletr.find_all('th')].copy()
+    recordTotalNum =readSoup.find(id = 'grdNavigator_lblRecordsCount').string
+    totalPagesNum = int(int(recordTotalNum)/200)+1
     extendValuelist = []
-    for singletr in readSoup.find('tbody',class_='ig_e531842b_r1 WebGridText ig_e531842b_r4').find_all('tr'):
-        extendValuelist.append([singletd.find('nobr').string for singletd in singletr.find_all('td')].copy())
+    #print('recordTotalNum:%s'%(recordTotalNum))
+    #print('totalPagesNum:%s'%(totalPagesNum))
+    for i in range(totalPagesNum):
+        if i == 0 and int(recordTotalNum) > 10 and totalPagesNum == 1:
+            
+            driver.get(needurl)
+            time.sleep(2)
+            driver.find_element_by_xpath("//select[@class='pager-sizes']/option[@title='200']").click()
+            time.sleep(2)
+            tmpPageSource = driver.page_source 
+            readSoup = bs.BeautifulSoup(tmpPageSource,'lxml')
+        elif i > 0 and int(recordTotalNum) > 200 and totalPagesNum > 1:
+            driver.get(needurl)
+            time.sleep(2)
+            driver.find_element_by_xpath("//select[@class='pager-sizes']/option[@title='200']").click()
+            time.sleep(2)
+            driver.find_element_by_xpath("//div[@id='grdNavigator_PagerContainer']/div/ul/li["+str(int(i)+1)+"]/a/span").click()
+            time.sleep(2)
+            tmpPageSource = driver.page_source 
+            readSoup = bs.BeautifulSoup(tmpPageSource,'lxml')
+        singletr = readSoup.find('thead',class_='ig_e531842b_r1 WebGridText ig_e531842b_r4').find('tr')
+        extendNamelist = [singletd.find('nobr').string for singletd in singletr.find_all('th')].copy()
+        
+        for singletr in readSoup.find('tbody',class_='ig_e531842b_r1 WebGridText ig_e531842b_r4').find_all('tr'):
+            extendValuelist.append([singletd.find('nobr').string for singletd in singletr.find_all('td')].copy())       
     if  len(extendValuelist) > 0: 
         for singleExtendValue in extendValuelist:
             singleExtendGroup = {}
@@ -294,7 +314,7 @@ def queryExtendGroup(requestInfo):
                     singleExtendGroup[extendNamelist[i]] = singleExtendValue[i]
             listExtendGroup.append(singleExtendGroup.copy())
     else:
-        print('No extend group list')      
+        print('No extend group list')          
     print('listExtendGroup:%s'%(listExtendGroup))
     return listExtendGroup
 def queryExtendDetail(driver,requestInfo,groupID):
@@ -447,12 +467,12 @@ def addExtendDetail(driver,requestInfo,addSingleExtendDetail,listExtendDetail,gr
     else:
         print('addExtendDetailName:%s is null,Add ignore!'%(addExtendDetailName))        
 def importPublicCodeDetail(driver,requestInfo,listExtendByDoc,listPublicByDoc):
-    listExtendGroup = queryExtendGroup(requestInfo)
+    listExtendGroup = queryExtendGroup(driver,requestInfo)
     pc_ExtendGroup = {'repeatLimit': '无限制', 'extendName': '更新公用代码明细', 'extendDesc': 'Sys config for update publiccodeitem', 'extendType': '组织业务数据', 'codeItem': [{'列字段名称': '公用代码类型', '显示方式': '文本框', '数据类型': '文本', '是否必填': '否', '数据关联': '', '序号': '1'}, {'列字段名称': '公用代码编号', '显示方式': '文本框', '数据类型': '文本', '是否必填': '否', '数据关联': '', '序号': '2'},{'列字段名称': '公用代码名称', '显示方式': '文本框', '数据类型': '文本', '是否必填': '否', '数据关联': '', '序号': '3'}]}
     #firt step:add extend group
     addExtendGroup(driver,requestInfo,pc_ExtendGroup,listExtendGroup)
     #second step:add extend detail
-    listExtendGroup = queryExtendGroup(requestInfo)
+    listExtendGroup = queryExtendGroup(driver,requestInfo)
     pc_SysExtendGroup = [singleExtendGroup for singleExtendGroup in listExtendGroup if singleExtendGroup.get('群组名称')==pc_ExtendGroup.get('extendName')]
     pc_ExtendDetail = pc_ExtendGroup.get('codeItem')
     pc_SysExtendGroup_GroupID = pc_SysExtendGroup[0].get('群组编号')
@@ -584,15 +604,21 @@ def importPublicCodeDetail(driver,requestInfo,listExtendByDoc,listPublicByDoc):
     time.sleep(2)
     print('importPublicCodeDetail End')
 def updateExtendGroup(driver,requestInfo,listExtendByDoc):
-    listExtendGroup = queryExtendGroup(requestInfo)
+    listExtendGroup = queryExtendGroup(driver,requestInfo)
     for sinExtend in listExtendByDoc:
         addExtendGroup(driver,requestInfo,sinExtend,listExtendGroup)
-    listExtendGroup = queryExtendGroup(requestInfo)
+    listExtendGroup = queryExtendGroup(driver,requestInfo)
+    print('listExtendGroup:%s'%(listExtendGroup))  
     for cur_ExtendGroup in listExtendByDoc:
+        print('extendname:%s'%(cur_ExtendGroup.get('extendName')))
+        
+        
         cur_SimExtendGroup = [singleExtendGroup for singleExtendGroup in listExtendGroup if singleExtendGroup.get('群组名称')==cur_ExtendGroup.get('extendName')]
+        
         cur_ExtendDetail = cur_ExtendGroup.get('codeItem')
-        print('cur_ExtendGroup:%s'%(cur_ExtendGroup))  
+        print('cur_ExtendGroup:%s'%(cur_ExtendGroup))
         cur_ExtendGroup_GroupID = cur_SimExtendGroup[0].get('群组编号')
+        
         cur_ExtendGroup_ExtendDetail = queryExtendDetail(driver,requestInfo,cur_ExtendGroup_GroupID)
         if cur_ExtendDetail is not None and len(cur_ExtendDetail) > 0:
             for sin_cur_ExtendDetail in cur_ExtendDetail:
@@ -694,28 +720,223 @@ def updatePool(driver,requestInfo,listFormuByDoc):
                     driver.switch_to_alert().accept()
         else:
             print('other type formu_name%s'%(formu_name))
+def addInsArea_Post(requestInfo,sinInsArea):
+    if sinInsArea is None or len(sinInsArea) == 0:
+        print('ID error,add ignore!')
+    else:
+        needurl = requestInfo.rooturl + r'/ePayroll/PayrollParameterSetting/InsureSystemSetEdit.aspx'
+        needPostData = {}
+        needPostData['__VIEWSTATE'] = get_ViewState(needurl,requestInfo.headers,requestInfo.http)
+        needPostData['txtAreaName'] = sinInsArea
+        needPostData['btnAdd'] = '新增'
+        needPostData['__VIEWSTATEGENERATOR'] = '97C38CD7'
+        response = requestNeedurl(needurl,postData = needPostData,headers = requestInfo.headers,CookieOpener = requestInfo.CookieOpener)
+        readSoup = bs.BeautifulSoup(response.read().decode(),'html.parser')   
+        msg = re.findall(r"alert\(\'.*\'\)",str(readSoup))
+        if msg is None or len(msg) == 0:
+            print('no msg sinInsArea:%s'%(sinInsArea))
+        else:
+            print('Add inInsArea:%s;Msg:%s'%(sinInsArea,msg[0]))
 def queryInsArea(requestInfo):
     listInsArea = []
     needurl = requestInfo.rooturl + r'/ePayroll/PayrollParameterSetting/InsureSystemSet.aspx'    
-    content = http.request(uri = needurl,method = 'GET', headers=requestInfo.headers)[1]
+    content = requestInfo.http.request(uri = needurl,method = 'GET', headers=requestInfo.headers)[1]
     readSoup = bs.BeautifulSoup(content.decode(),'lxml')
-    listInsArea = listInsArea + [singleGroup.find_all('span')[2].string for singleGroup in readSoup.find('div',id='M_TreeInsureArea_1').find_all('div') if len(singleGroup.find_all('span')[2].string)>0].copy()    
-    print('listInsArea:%s'%(listInsArea))  
-    
+    listInsArea = listInsArea + [singleGroup.find_all('span')[2].string for singleGroup in readSoup.find('div',id='M_TreeInsureArea_1').find_all('div') if len(singleGroup.find_all('span')[2].string)>0].copy()     
+    print('listInsArea:%s'%(listInsArea))
+    return   listInsArea  
+def updateInsAreaByDoc(requestInfo,listPublicByDoc):
+    tmplist_InsArea_ByDoc = [sinPC.get('codeItem') for sinPC in listPublicByDoc if sinPC.get('codeName') == '缴纳地区']
+    list_InsArea_ByDoc = [sinCI.get('codeItemValue') for sinCI in tmplist_InsArea_ByDoc[0]]    
+    list_InsArea_Sys = queryInsArea(requestInfo)
+    for sin_InsArea_ByDoc in list_InsArea_ByDoc:
+        if sin_InsArea_ByDoc in list_InsArea_Sys:
+            print('sin_InsArea_ByDoc %s in list_InsArea_Sys,Add ignore!'%(sin_InsArea_ByDoc))
+        elif len(sin_InsArea_ByDoc) > 0:
+            addInsArea_Post(requestInfo,sin_InsArea_ByDoc)
+    print('updateInsAreaByDoc End:%s'%(list_InsArea_ByDoc))
+def queryInsAreaID(driver,requestInfo):
+    '''request web,and click insarea one by one fro every InsAreaID
+        return dic for example:{'无锡': '63940cc8-0842-47d5-9102-1bff4c56dd53', '特殊': 'f950e623-6380-4568-86b4-8acb20fc7127'}
+    '''
+    listInsArea = queryInsArea(requestInfo)
+    needurl = requestInfo.rooturl + r'/ePayroll/PayrollParameterSetting/InsureSystemSet.aspx' 
+    dictInsArea = {}
+    for i in range(len(listInsArea)):#range(len(listInsArea))
+        driver.get(needurl)
+        time.sleep(2)
+        driver.find_element_by_xpath("//div[@id='TreeInsureArea_1_"+ str(i + 1) +"']/span[3]").click()
+        time.sleep(2)
+        tmpPageSource = driver.page_source    
+        readSoup = bs.BeautifulSoup(tmpPageSource,"html.parser")
+        systemid =dict(readSoup.findAll(id = 'txtSystemID')[0].attrs)['value'] 
+        dictInsArea[listInsArea[i]] = systemid       
+    print('dictInsArea:%s'%(dictInsArea))
+    return dictInsArea
+def queryPersonPropID(requestInfo):
+    needurl = requestInfo.rooturl + r'/ePayroll/PersonalPayrollInformationManage/PersonalPayrollStructureGroupInput.aspx?Module=INS'
+    content = requestInfo.http.request(uri = needurl,method = 'GET', headers=requestInfo.headers)[1]
+    readSoup = bs.BeautifulSoup(content.decode(),'lxml')
+    listvalue = {sinoption.string:sinoption.get('value') for sinoption in readSoup.find('select',id='UcStaffSelect1_ddlqins').find_all('option') if sinoption.string is not None}    
+    print('listvalue:%s'%(listvalue))
+    return  listvalue
+def queryInsTypeID(requestInfo):
+    needurl = requestInfo.rooturl + r'/ePayroll/PersonalPayrollInformationManage/InsuranceDetailInfo.aspx'
+    content = requestInfo.http.request(uri = needurl,method = 'GET', headers=requestInfo.headers)[1]
+    readSoup = bs.BeautifulSoup(content.decode(),'lxml')
+    listvalue = {sinoption.string:sinoption.get('value') for sinoption in readSoup.find('select',id='DdlInsuranceType').find_all('option') if sinoption.string is not None}    
+    print('listvalue:%s'%(listvalue))
+    return  listvalue
+def addAreaDetail(driver,requestInfo,sinPerProID,sinInsAreaID,sinInsAreaDetail):
+    '''Add AreaDetail use webdriver,cost 5s
+    '''
+    if sinPerProID is None or sinInsAreaID is None or len(sinPerProID) == 0 or len(sinInsAreaID) == 0:
+        print('ID error,add ignore!')
+    else:
+        needurl = requestInfo.rooturl + r'/ePayroll/PayrollParameterSetting/InsureSystemSetItemEdit.aspx?SystemID='+ sinInsAreaID + '&PersonPropID=' + sinPerProID
+        driver.get(needurl)
+        time.sleep(2)
+        driver.refresh()
+        time.sleep(2)
+        kindName = sinInsAreaDetail.get('险种名称')
+        orderNo = str(int(sinInsAreaDetail.get('排序')))
+        keepMod = sinInsAreaDetail.get('取舍方式')
+        keepBits = str(sinInsAreaDetail.get('保留小数位'))
+        priPayMode = sinInsAreaDetail.get('个人缴费类型')
+        priPayValue = str(sinInsAreaDetail.get('个人缴费金额或比例'))
+        priPayLowLevel = str(sinInsAreaDetail.get('个人基数下限规则'))
+        priPayUpLevel = str(sinInsAreaDetail.get('个人基数上限规则'))
+        pubPayMode = sinInsAreaDetail.get('单位缴费类型')
+        pubPayValue = str(sinInsAreaDetail.get('单位缴费金额或比例'))
+        pubPayLowLevel = str(sinInsAreaDetail.get('单位基数下限规则'))
+        pubPayUpLevel = str(sinInsAreaDetail.get('单位基数上限规则'))
+        dateEffectDate_GuruDate = r'2017-01-01'
+         
+        driver.find_element_by_xpath("//select[@id='drpKindName']/option[@title='"+kindName+"']").click()
+        driver.find_element_by_id('txtOrderNo').clear()
+        driver.find_element_by_id('txtOrderNo').send_keys(orderNo)
+        driver.find_element_by_xpath("//select[@id='drpKeepMod']/option[@title='"+keepMod+"']").click()
+        driver.find_element_by_xpath("//select[@id='drpkeepBits']/option[@title='"+keepBits+"']").click()
+        driver.find_element_by_id('txtDateEffectDate_GuruDate').send_keys(dateEffectDate_GuruDate)
+        #if paymode is 金额,lowlevel and uplevel can't be write,so config it 比例 first,after write,config paymode last
+        driver.find_element_by_xpath("//select[@id='drpPriPayMode']/option[@title='"+'比例'+"']").click()       
+        driver.find_element_by_id('txtPriPayValue').clear()
+        driver.find_element_by_id('txtPriPayValue').send_keys(priPayValue)
+        driver.find_element_by_id('txtPriPayLowLevel').clear()
+        driver.find_element_by_id('txtPriPayLowLevel').send_keys(priPayLowLevel)
+        driver.find_element_by_id('txtPriPayUpLevel').clear()
+        driver.find_element_by_id('txtPriPayUpLevel').send_keys(priPayUpLevel)
+        driver.find_element_by_xpath("//select[@id='drpPriPayMode']/option[@title='"+priPayMode+"']").click()
+        driver.find_element_by_xpath("//select[@id='drpPubPayMode']/option[@title='"+'比例'+"']").click()
+        driver.find_element_by_id('txtPubPayValue').clear()
+        driver.find_element_by_id('txtPubPayValue').send_keys(pubPayValue)
+        driver.find_element_by_id('txtPubPayLowLevel').clear()
+        driver.find_element_by_id('txtPubPayLowLevel').send_keys(pubPayLowLevel)
+        driver.find_element_by_id('txtPubPayUpLevel').clear()
+        driver.find_element_by_id('txtPubPayUpLevel').send_keys(pubPayUpLevel)
+        driver.find_element_by_xpath("//select[@id='drpPubPayMode']/option[@title='"+pubPayMode+"']").click()
+        driver.find_element_by_id('btnAddInsureKind').click()
+        time.sleep(2)
+        try:
+            msg = driver.switch_to_alert().text
+        except(Exception):
+            print('no msg for kindname:%s'%(kindName))
+        else:
+            if msg == '新增成功':
+                print('Add Success kindname：%s'%(kindName))
+                driver.switch_to_alert().accept()
+            else:
+                print('Add Failed kindname:%s;Because of:%s'%(kindName,msg))
+                driver.switch_to_alert().accept()
+        
+        print('add kind detail:%s end;'%(kindName))  
+def readInsAreaDetailByDoc(requestInfo,filename):
+    #step1:read InsAreaDetailCfg from payrollcfgfile
+    workbook = xlrd.open_workbook(filename)
+    curws = workbook.sheet_by_name('附2保险缴纳体系')
+    nrows,ncols = curws.usp_get_len()
+    content_value = []
+    for i in range(nrows):
+        content_rowValue = []
+        if i == 0:
+            content_Name = [curws.cell_value(i,j) for j in range(ncols)]
+        else:
+            content_rowValue = [curws.cell_value(i,j) for j in range(ncols)]
+            content_value.append(content_rowValue.copy())              
+    #step2:gather it into dict    
+    tableContent = [{content_Name[i]:sin_rowvalue[i] for i in range(len(sin_rowvalue))} for sin_rowvalue in content_value ]
+    #print('tableContent:%s'%(tableContent))
+    return tableContent
+def get_ViewState(needurl,headers,http):
+    content = http.request(uri = needurl,method = 'GET', headers=headers)[1]
+    readSoup = bs.BeautifulSoup(content.decode(),'html.parser')   
+    view_input = readSoup.find(id="__VIEWSTATE").get('value')      
+    return view_input        
+def addAreaDetail_Post(requestInfo,sinPerProID,sinInsAreaID,sinInsAreaDetail,PC_InsType):
+    PC_KeepMod = {'四舍五入':'0','进位':'1','舍尾':'2','银行舍入法':'3','见分进元':'4','七舍八入(二舍三入)':'5'}
+    PC_keepBits = {'0':'0','1':'1','2':'2','3':'3','4':'4'}
+    PC_payMode = {'比例':'0','金额':'1'}
+    if sinPerProID is None or sinInsAreaID is None or len(sinPerProID) == 0 or len(sinInsAreaID) == 0:
+        print('ID error,add ignore!')
+    else:
+        needurl = requestInfo.rooturl + r'/ePayroll/PayrollParameterSetting/InsureSystemSetItemEdit.aspx?SystemID='+ sinInsAreaID + '&PersonPropID=' + sinPerProID     
+        needPostData = {}
+        needPostData['__VIEWSTATE'] = get_ViewState(needurl,requestInfo.headers,requestInfo.http)
+        needPostData['drpKindName'] = PC_InsType.get(sinInsAreaDetail.get('险种名称'))
+        needPostData['txtOrderNo'] = str(int(sinInsAreaDetail.get('排序')))
+        needPostData['drpKeepMod'] = PC_KeepMod.get(sinInsAreaDetail.get('取舍方式'))
+        needPostData['drpkeepBits'] = str(sinInsAreaDetail.get('保留小数位'))
+        needPostData['drpPriPayMode'] = PC_payMode.get(sinInsAreaDetail.get('个人缴费类型'))
+        needPostData['txtPriPayValue'] = str(sinInsAreaDetail.get('个人缴费金额或比例'))
+        needPostData['txtPriPayLowLevel'] = str(sinInsAreaDetail.get('个人基数下限规则'))
+        needPostData['txtPriPayUpLevel'] = str(sinInsAreaDetail.get('个人基数上限规则'))
+        needPostData['drpPubPayMode'] = PC_payMode.get(sinInsAreaDetail.get('单位缴费类型'))
+        needPostData['txtPubPayValue'] = str(sinInsAreaDetail.get('单位缴费金额或比例'))
+        needPostData['txtPubPayLowLevel'] = str(sinInsAreaDetail.get('单位基数下限规则'))
+        needPostData['txtPubPayUpLevel'] = str(sinInsAreaDetail.get('单位基数上限规则'))
+        needPostData['txtDateEffectDate$GuruDate'] = '2017-01-01'  #txtDateEffectDate$GuruDate
+        needPostData['btnAddInsureKind'] = '新增' #新增
+        needPostData['__VIEWSTATEGENERATOR'] = '97C38CD7'
+        #response, content = requestInfo.http.request(needurl,method = 'POST', headers=requestInfo.headers, body=urllib.parse.urlencode(needPostData).encode('utf-8'))
+        #readSoup = bs.BeautifulSoup(content.decode(),'html.parser')   
+        #msg = re.findall(r"alert\(.*\)",str(readSoup))
+        print('needurl:%s'%(needurl))
+        response = requestNeedurl(needurl,postData = needPostData,headers = requestInfo.headers,CookieOpener = requestInfo.CookieOpener)
+        readSoup = bs.BeautifulSoup(response.read().decode(),'html.parser')   
+        msg = re.findall(r"alert\(.*\'\)",str(readSoup))
+        if msg is None or len(msg) == 0:
+            print('No Msg!')
+        else:
+            print('Add Msg:%s'%(msg[0]))
+def updateInsAreaDetailByDoc(driver,requestInfo,list_InsAreaDetail_ByDoc):
+    PC_InsType = queryInsTypeID(requestInfo)
+    dictInsAreaID_Sys = queryInsAreaID(driver,requestInfo)
+    dictPersonPropID_Sys = queryPersonPropID(requestInfo)
+    print('请注意，由于需要添加个数为:%s;预估时间为:%s;'%(len(list_InsAreaDetail_ByDoc),len(list_InsAreaDetail_ByDoc)*5)) 
+    for sin_InsAreaDetail_ByDoc in list_InsAreaDetail_ByDoc:
+        sinPerPro_ByDoc = sin_InsAreaDetail_ByDoc.get('社保身份')
+        sinInsArea_ByDoc = sin_InsAreaDetail_ByDoc.get('缴纳地区')
+        sinKindName_ByDoc = sin_InsAreaDetail_ByDoc.get('险种名称')
+
+        sinPerProID_Sys = dictPersonPropID_Sys.get(sinPerPro_ByDoc) 
+        sinInsArea_Sys = dictInsAreaID_Sys.get(sinInsArea_ByDoc)
+        print('缴纳地区:%s;社保身份:%s;险种:%s;'%(sinInsArea_ByDoc,sinPerPro_ByDoc,sinKindName_ByDoc))
+        if sinPerProID_Sys is None or sinInsArea_Sys is None or len(sinPerProID_Sys) == 0 or len(sinInsArea_Sys) == 0:
+            print('sinPerProID_Sys or sinInsArea_Sys  error,add ignore!Please update InsArea first')
+        else:   
+            addAreaDetail_Post(requestInfo,sinPerProID_Sys,sinInsArea_Sys,sin_InsAreaDetail_ByDoc,PC_InsType)
+            #addAreaDetail(driver,requestInfo,sinPerProID_Sys,sinInsArea_Sys,sin_InsAreaDetail_ByDoc)
+    print('updateInsAreaDetailByDoc end')
     
 def GAIAPAYROLL(request):
     '''request for payroll '''
-    defaultFileName = r'E:\工作文档\1608-中银\06业务流程分析\薪资管理\test.docx' 
+    #defaultFileName = r'E:\工作文档\1608-中银\06业务流程分析\薪资管理\test.docx' 
+    defaultFileName = r'E:\工作文档\1608-中银\06业务流程分析\薪资管理\中银保险薪资管理系统_薪资管理_设计_V1.0_170617.docx' 
     defaultCFGFileName = r'E:\工作文档\1608-中银\00汇总文档\T0005中银-系统配置记录.xlsx' 
-    
-     
+    defaultINSfilename = r'E:\工作文档\1608-中银\06业务流程分析\薪资管理\test.xlsx'
     return render_to_response('GURU/GAIAPAYROLL.html',{
-        'defaultFileName':json.dumps(defaultFileName),'defaultCFGFileName':json.dumps(defaultCFGFileName)
-    })
-
-      
-    
-    
+        'defaultFileName':json.dumps(defaultFileName),'defaultCFGFileName':json.dumps(defaultCFGFileName),'defaultINSfilename':json.dumps(defaultINSfilename)
+    }) 
 def web_updatePublicGroupByDoc(request):
     if request.method == "POST": 
         action =  request.POST.get('__Action')
@@ -768,6 +989,13 @@ def web_updatePublicGroupByDoc(request):
             updateExtendGroup(driver,requestInfo,listExtendByDoc)
             driver.close()
             pass
+        elif action == '初始化缴纳地区':
+            resLogin = loginInSystem(requestInfo)
+            listPublicByDoc = readPublicByDoc(requestInfo,filename)
+            updateInsAreaByDoc(requestInfo,listPublicByDoc)
+            #driver.close()
+            pass
+        
             
         return HttpResponseRedirect("/GURU/GAIAPAYROLL/") 
 def web_updateFormuAbout(request):
@@ -817,26 +1045,47 @@ def web_updateFormuAbout(request):
             pass
         
         return HttpResponseRedirect("/GURU/GAIAPAYROLL/") 
-
-#resLogin = loginInSystem(requestInfo)
-#driver = createDriver(requestInfo)
-#事项1：通过doc读取公用代码
-#fileName = r'E:\工作文档\1608-中银\06业务流程分析\薪资管理\test.docx'
-#listPublicByDoc = readPublicByDoc(requestInfo,fileName)
-#listExtendByDoc = readExtendByDoc(requestInfo,fileName)
-#事项2：读取已存在的保险公用代码及薪资公用代码 更新公用代码群组时会自动调用
-#listPublicGroupName = queryPublicGroup(requestInfo)
-#事项3：新增公用代码群组 更新公用代码群组时会自动调用
-#resAddPublicGroup = addPublicGroup(driver,requestInfo,'薪资公用代码','test002')
-#事项4：更新公用代码群组
-#updatePublicGroupByDoc(driver,requestInfo,listPublicByDoc)
-#addSingleExtendGroup = {'codeItem': [{'列字段名称': '人员险种', '数据关联': '人员险种(人事同步)', '是否必填': '是', '数据类型': '文本', '显示方式': '选择框', '序号': '1'}, {'列字段名称': '财务代码', '数据关联': '', '是否必填': '是', '数据类型': '文本', '显示方式': '文本框', '序号': '2'}], 'extendDesc': '为费用凭证报表产品代码列维护员工险种编码与财务码对应关系，维护在根组织（0总公司）上。', 'extendType': '组织业务数据', 'extendName': '员工险种-财务码', 'repeatLimit': '无限制'}
-#addSingleExtendDetail = addSingleExtendGroup.get('codeItem')[0]
-#addExtendGroup(driver,requestInfo,addSingleExtendGroup,listExtendGroupName)
-#queryExtendGroup(requestInfo)
-#listExtendDetail = queryExtendDetail(requestInfo,'90184dd3-25ba-4475-a15a-ab5e0811071d')
-
-#addExtendDetail(driver,requestInfo,addSingleExtendDetail,listExtendDetail,'90184dd3-25ba-4475-a15a-ab5e0811071d')
+def web_updateInsAbout(request):
+    if request.method == "POST": 
+        action =  request.POST.get('__INSAction')
+        print('action:%s'%(action))
+        INSfilename =  request.POST.get('insfilename')
+        print('INSfilename:%s'%(INSfilename))
+        cookie = cookielib.CookieJar()
+        handler = urllib.request.HTTPCookieProcessor(cookie)
+        CookieOpener = urllib.request.build_opener(handler)
+        headers = {}
+        headers['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+        headers['Accept-Encoding'] = 'deflate'
+        headers['Accept-Language'] = 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3'
+        headers['Connection'] = 'keep-alive'
+        headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0'
+        
+        webSourceInfo = updateWebSource.classReadWebSouce()  
+        dbSourceInfo = updateLogin.readConn()
+        
+        rooturl = webSourceInfo.getRooturl()
+        host = webSourceInfo.getHost()
+        port = webSourceInfo.getPort()
+        webname = webSourceInfo.getWebname()
+        webpsw = webSourceInfo.getWebpsw()
+        tmpFilePath = r'E:\KM\GITPROJECT\HumanResourcesAss\AssForGaia\src\Guru\tmpfile'
+        showMode = r'show'
+        loginurl = rooturl + r'/Account/Logon?'
+        http = httplib2.Http()
+        requestInfo = UrlRequest(rooturl=rooturl,host=host,port=port,webname=webname,webpsw=webpsw,tmpFilePath=tmpFilePath,showMode=showMode,cookie=cookie,headers=headers,loginurl=loginurl,CookieOpener=CookieOpener,http=http)
+        
+        if action == '初始化保险缴纳体系':
+            resLogin = loginInSystem(requestInfo)
+            driver = createDriver(requestInfo)
+            list_InsAreaDetail_ByDoc = readInsAreaDetailByDoc(requestInfo,INSfilename)
+            updateInsAreaDetailByDoc(driver,requestInfo,list_InsAreaDetail_ByDoc)
+            driver.close()
+        elif action == '回退保险基数数据':
+            pass
+        elif action == '删除保险补缴数据':
+            pass
+        return HttpResponseRedirect("/GURU/GAIAPAYROLL/") 
 
 t2 = time.clock()
 print ("the project costs %.9fs"%(t2-t1))

@@ -2,8 +2,8 @@
 <ss:Workbook xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:html="http://www.w3.org/TR/REC-html40" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">
   <o:DocumentProperties>
     <o:LastAuthor>Richie.Huang</o:LastAuthor>
-    <o:Created>2017-06-16 03:53:30</o:Created>
-    <o:LastSaved>2017-06-16 03:53:30</o:LastSaved>
+    <o:Created>2017-06-18 12:27:58</o:Created>
+    <o:LastSaved>2017-06-18 12:27:58</o:LastSaved>
     <o:Version>11.9999</o:Version>
   </o:DocumentProperties>
   <x:ExcelWorkbook>
@@ -81,7 +81,7 @@
 <ss:Data ss:Type="String">1</ss:Data>
 </ss:Cell>
 <ss:Cell>
-<ss:Data ss:Type="String">本地城镇</ss:Data>
+<ss:Data ss:Type="String">不区分</ss:Data>
 </ss:Cell>
 </ss:Row>
 <ss:Row>
@@ -101,7 +101,7 @@
 <ss:Data ss:Type="String">2</ss:Data>
 </ss:Cell>
 <ss:Cell>
-<ss:Data ss:Type="String">本地农村</ss:Data>
+<ss:Data ss:Type="String">本地城镇</ss:Data>
 </ss:Cell>
 </ss:Row>
 <ss:Row>
@@ -141,7 +141,7 @@
 <ss:Data ss:Type="String">4</ss:Data>
 </ss:Cell>
 <ss:Cell>
-<ss:Data ss:Type="String">外地农村</ss:Data>
+<ss:Data ss:Type="String">本地农村</ss:Data>
 </ss:Cell>
 </ss:Row>
 <ss:Row>
@@ -161,7 +161,7 @@
 <ss:Data ss:Type="String">5</ss:Data>
 </ss:Cell>
 <ss:Cell>
-<ss:Data ss:Type="String">不区分</ss:Data>
+<ss:Data ss:Type="String">外地农村</ss:Data>
 </ss:Cell>
 </ss:Row>
 <ss:Row>
@@ -181,7 +181,7 @@
 <ss:Data ss:Type="String">6</ss:Data>
 </ss:Cell>
 <ss:Cell>
-<ss:Data ss:Type="String">本地</ss:Data>
+<ss:Data ss:Type="String">新职工</ss:Data>
 </ss:Cell>
 </ss:Row>
 <ss:Row>
@@ -201,7 +201,7 @@
 <ss:Data ss:Type="String">7</ss:Data>
 </ss:Cell>
 <ss:Cell>
-<ss:Data ss:Type="String">外地</ss:Data>
+<ss:Data ss:Type="String">老职工</ss:Data>
 </ss:Cell>
 </ss:Row>
 <ss:Row>
@@ -221,7 +221,7 @@
 <ss:Data ss:Type="String">8</ss:Data>
 </ss:Cell>
 <ss:Cell>
-<ss:Data ss:Type="String">农户</ss:Data>
+<ss:Data ss:Type="String">45岁以上-本地城镇</ss:Data>
 </ss:Cell>
 </ss:Row>
 <ss:Row>
@@ -241,7 +241,7 @@
 <ss:Data ss:Type="String">9</ss:Data>
 </ss:Cell>
 <ss:Cell>
-<ss:Data ss:Type="String">城镇</ss:Data>
+<ss:Data ss:Type="String">45岁以上-本地农村</ss:Data>
 </ss:Cell>
 </ss:Row>
 <ss:Row>
@@ -261,7 +261,7 @@
 <ss:Data ss:Type="String">10</ss:Data>
 </ss:Cell>
 <ss:Cell>
-<ss:Data ss:Type="String">新职工</ss:Data>
+<ss:Data ss:Type="String">45岁以上-外地城镇</ss:Data>
 </ss:Cell>
 </ss:Row>
 <ss:Row>
@@ -281,7 +281,87 @@
 <ss:Data ss:Type="String">11</ss:Data>
 </ss:Cell>
 <ss:Cell>
-<ss:Data ss:Type="String">老职工</ss:Data>
+<ss:Data ss:Type="String">45岁以上-外地农村</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">社保身份</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">12</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">45岁以下-本地城镇</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">社保身份</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">13</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">45岁以下-本地农村</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">社保身份</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">14</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">45岁以下-外地城镇</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">社保身份</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">15</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">45岁以下-外地农村</ss:Data>
 </ss:Cell>
 </ss:Row>
 <ss:Row>

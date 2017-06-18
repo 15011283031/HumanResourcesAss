@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^GAIAPAYROLL/$',GAIAPAYROLL.GAIAPAYROLL),
     url(r'^GAIAPAYROLL/updatePayroll/$',GAIAPAYROLL.web_updatePublicGroupByDoc),
     url(r'^GAIAPAYROLL/updateFormuAbout/$',GAIAPAYROLL.web_updateFormuAbout),
-    
+    url(r'^GAIAPAYROLL/updateInsAbout/$',GAIAPAYROLL.web_updateInsAbout),
     
     
 ]

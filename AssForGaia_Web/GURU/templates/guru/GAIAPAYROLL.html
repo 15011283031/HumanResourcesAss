@@ -20,6 +20,11 @@ function updateExtendGroup() {
 	var action = $("#btnupdateExtendGroup").val()
 	document.getElementById("__Action").value = action;
 } 
+function updateInsAreaByDoc() {
+	var action = $("#btnupdateInsAreaByDoc").val()
+	document.getElementById("__Action").value = action;
+} 
+
 function updateFormu() {
 	var CFGAction = $("#btnupdateFormu").val()
 	document.getElementById("__CFGAction").value = CFGAction;
@@ -33,6 +38,10 @@ function updateFormual() {
 	document.getElementById("__CFGAction").value = CFGAction;
 }
 
+function updateInsAreaDetailByDoc() {
+	var INSAction = $("#btnupdateInsAreaDetailByDoc").val()
+	document.getElementById("__INSAction").value = INSAction;
+}
 </script>
 
 
@@ -73,6 +82,11 @@ function updateFormual() {
             <td><input class='contentbutton autowidth' name="btnimportPublicDetailByDoc" value="导入公用代码明细" id="btnimportPublicDetailByDoc" type="submit" onclick="importPublicDetailByDoc();"/></td> 
             <td><input class='contentbutton autowidth' name="btnupdateExtendGroup" value="更新业务数据" id="btnupdateExtendGroup" type="submit" onclick="updateExtendGroup();"/></td>   
         </tr>
+        <tr>
+            <td><input class='contentbutton autowidth' name="btnupdateInsAreaByDoc" value="初始化缴纳地区" id="btnupdateInsAreaByDoc" type="submit" onclick="updateInsAreaByDoc()"/></td>
+            <td></td> 
+            <td></td>   
+        </tr>
     </table>
 	</form>
 	</div>
@@ -96,6 +110,26 @@ function updateFormual() {
     </table>
 	</form>
 	</div>
+	
+	<div class='bg-logon-content leftcontent minwidth'>
+	<form id='form3' action='updateInsAbout/' method="POST">
+	<input type="hidden" name="__INSAction" id="__INSAction" value="" />
+	<table id="Table4" class='dtNAV'>
+		<tr>
+        	<td class='TD1'>社保配置文件地址</td>
+        	<td class='TD2'><input name="insfilename" maxlength="40" id="insfilename" class="TextBox normal-text" style="width:200px;" type="text"/>
+        	 </td>	
+      	</tr>
+	</table>
+	<table class='dtBread'>
+        <tr>
+            <td><input class='contentbutton autowidth' name="btnupdateInsAreaDetailByDoc" value="初始化保险缴纳体系" id="btnupdateInsAreaDetailByDoc" type="submit" onclick="updateInsAreaDetailByDoc()"/></td>
+            <td></td> 
+            <td></td>   
+        </tr>
+    </table>
+	</form>
+	</div>
 		
 </div>
 
@@ -104,10 +138,12 @@ function updateFormual() {
 <script>
     var defaultFileName = {{defaultFileName|safe}}
     document.getElementById("filename").value = defaultFileName;   
-</script>
-<script>
+
 	var defaultCFGFileName = {{defaultCFGFileName|safe}}
     document.getElementById("cfgfilename").value = defaultCFGFileName;  
-	</script>
+	
+	var defaultINSfilename = {{defaultINSfilename|safe}}
+    document.getElementById("insfilename").value = defaultINSfilename; 	
+</script>
 </body>
 </html>
