@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'gurucss/ehr.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'gurucss/cus.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'gurucss/style.css' %}" />
+<title>AssForGaia</title>
+</head>
+
+<body class='cusbody'>
+<header>
+<div class='bg-bread'>
+	<table class='dtBread'>
+		<tr>
+			<td class='TD1'><div id="list_DbSource">DB Source:</div></td>
+			<td class='TD3'><input class='smallbutton' name="btnUpdateDBSource" value="更新DB源" id="btnUpdateDBSource" title="更新DB源" type="submit" onclick="window.location.href = 'updateLogin'; return false;"></td>
+			<td class='TD4'><input class='smallbutton' name="btnUpdateWebSource" value="更新Web源" id="btnUpdateWebSource" title="更新Web源" type="submit" onclick="window.location.href = 'updateWebSource'; return false;"></td>
+			<td class='TD2'><div id="list_WebSource">Web Source:</div></td>
+
+		</tr>
+	</table>
+
+</div>
+</header>
+<div class='bg-title-content'>
+<ul id="nav">
+	<li><a href="/MYKM/page_17.html">空</a>
+	    <ul>
+	        <li><a href="/MYKM/page_60.html">空</a></li>
+	    </ul>
+    </li>
+	<li ><a href="/GURU/GAIAPAYROLL">薪资实施</a>
+		<ul>
+	    	<li><a href="/GURU/GAIAPAYROLLCAL/">薪资测算</a>
+			    <ul>
+			        <li><a href="/MYKM/page_104.html">空</a></li>   
+				</ul>
+			</li>
+		</ul>
+	</li>
+</div>
+
+<script type="text/javascript" src="{% static 'gurujs/scripts.js' %}"></script>
+<script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>    
+<script>
+	var webSourceInfo = {{webSourceInfo|safe}}
+	$('#list_WebSource').append(webSourceInfo)
+	var dbSourceInfo = {{dbSourceInfo|safe}}
+	$('#list_DbSource').append(dbSourceInfo)
+
+    </script>
+</body>
+</html>

@@ -1,581 +1,1369 @@
-﻿<?xml version="1.0"?>
-<?mso-application progid="Excel.Sheet"?>
-<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
- xmlns:o="urn:schemas-microsoft-com:office:office"
- xmlns:x="urn:schemas-microsoft-com:office:excel"
- xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
- xmlns:html="http://www.w3.org/TR/REC-html40">
- <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
-  <Author>Administrator</Author>
-  <LastAuthor>Peter.Q.Chen</LastAuthor>
-  <Created>2017-06-07T13:09:42Z</Created>
-  <LastSaved>2017-06-07T13:09:42Z</LastSaved>
-  <Version>15.00</Version>
- </DocumentProperties>
- <OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office">
-  <AllowPNG/>
- </OfficeDocumentSettings>
- <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
-  <WindowHeight>7605</WindowHeight>
-  <WindowWidth>13335</WindowWidth>
-  <WindowTopX>0</WindowTopX>
-  <WindowTopY>0</WindowTopY>
-  <ProtectStructure>False</ProtectStructure>
-  <ProtectWindows>False</ProtectWindows>
- </ExcelWorkbook>
- <Styles>
-  <Style ss:ID="Default" ss:Name="Normal">
-   <Font ss:FontName="宋体" x:CharSet="134" ss:Size="11" ss:Color="#000000"/>
-   <Interior/>
-   <NumberFormat/>
-  </Style>
-  <Style ss:ID="s62">
-   <Font ss:FontName="宋体" x:CharSet="134" ss:Size="11" ss:Color="#000000"/>
-   <Interior/>
-   <NumberFormat ss:Format="@"/>
-  </Style>
-  <Style ss:ID="s63">
-   <Font ss:FontName="宋体" x:CharSet="134" ss:Size="11" ss:Color="#FFFFFF"/>
-   <Interior ss:Color="#3366FF" ss:Pattern="Solid"/>
-   <NumberFormat/>
-  </Style>
-  <Style ss:ID="s64">
-   <Font ss:FontName="宋体" x:CharSet="134" ss:Size="11" ss:Color="#FFFFFF"/>
-   <Interior ss:Color="#FF0000" ss:Pattern="Solid"/>
-   <NumberFormat/>
-  </Style>
- </Styles>
- <Worksheet ss:Name="OrgBusinessDataImport">
-  <Table ss:ExpandedColumnCount="6" ss:ExpandedRowCount="1" x:FullColumns="1"
-   x:FullRows="1" ss:DefaultColumnWidth="54" ss:DefaultRowHeight="13.5">
-   <Column ss:StyleID="s62" ss:Span="5"/>
-   <Row>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">组织名称</Data></Cell>
-    <Cell ss:StyleID="s64"><Data ss:Type="String">组织代码</Data></Cell>
-    <Cell ss:StyleID="s64"><Data ss:Type="String">生效日期</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">公用代码类型(更新公用代码)</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">公用代码编号(更新公用代码)</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">公用代码名称(更新公用代码)</Data></Cell>
-   </Row>
-   <Row>
-    <Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-    <Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-    <Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">组织架构同步(组织同步)</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">1</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">安徽分公司</Data></Cell>
-   </Row>   
-   
-   
-   
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">社保身份</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">1</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">本地城镇</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">社保身份</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">2</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">本地农村</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">社保身份</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">3</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">外地城镇</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">社保身份</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">4</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">外地农村</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">社保身份</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">5</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">不区分</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">社保身份</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">6</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">本地</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">社保身份</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">7</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">外地</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">社保身份</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">8</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">农户</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">社保身份</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">9</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">城镇</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">社保身份</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">10</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">新职工</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">社保身份</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">11</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">老职工</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">基本险种</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">1</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">养老保险</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">基本险种</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">2</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">医疗保险</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">基本险种</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">3</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">大额医疗</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">基本险种</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">4</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">补充医疗</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">基本险种</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">5</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">失业保险</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">基本险种</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">6</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">生育保险</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">基本险种</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">7</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">残疾人就业保障金</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">基本险种</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">8</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">工伤保险</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">基本险种</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">9</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">补充工伤</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">基本险种</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">10</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">住房公积金</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">基本险种</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">11</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">住房公积金补充</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">基本险种</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">12</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">企业年金</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">基本险种</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">13</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">企业年金补充</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">银行名称</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">0</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">中国银行</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">薪资架构异动原因</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">1</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">普调</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">薪资架构异动原因</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">2</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">绩效调薪</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">薪资架构异动原因</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">3</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">晋升调薪</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">薪资架构异动原因</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">4</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">职位异动调薪</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">薪资架构异动原因</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">5</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">特殊调薪</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">薪资架构异动原因</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">6</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">大学生调薪</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">薪资架构异动原因</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">7</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">其他</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">开户行地区</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">1</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">11-北京</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">开户行地区</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">2</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">12-天津</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">开户行地区</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">3</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">13-河北</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">开户行地区</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">4</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">14-山西</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">开户行地区</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">5</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">15-内蒙</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">开户行地区</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">6</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">21-辽宁</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">开户行地区</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">7</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">23-黑龙江</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">开户行地区</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">8</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">31-上海</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">开户行地区</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">9</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">32-江苏</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">开户行地区</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">10</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">33-浙江</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">开户行地区</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">11</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">34-安徽</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">开户行地区</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">12</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">35-福建</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">开户行地区</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">13</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">36-江西</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">开户行地区</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">14</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">37-山东</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">开户行地区</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">15</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">41-河南</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">开户行地区</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">16</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">42-湖北</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">开户行地区</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">17</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">43-湖南</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">开户行地区</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">18</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">44-广东</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">开户行地区</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">19</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">45-广西</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">开户行地区</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">20</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">51-四川</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">开户行地区</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">21</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">53-云南</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">开户行地区</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">22</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">61-陕西</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">开户行地区</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">23</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">65-新疆</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">开户行地区</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">24</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">71-苏州</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">开户行地区</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">25</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">72-宁波</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">开户行地区</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">26</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">99-深圳</Data></Cell>
-</Row>
-<Row>
-<Cell ss:StyleID="s63"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">01</Data></Cell>
-<Cell ss:StyleID="s64"><Data ss:Type="String">2015-01-01</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">组织架构同步(组织同步)</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">1</Data></Cell>
-<Cell ss:StyleID="s63"><Data ss:Type="String">安徽分公司</Data></Cell>
-</Row>
-  </Table>
-  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
-   <Selected/>
-   <ProtectObjects>False</ProtectObjects>
-   <ProtectScenarios>False</ProtectScenarios>
-  </WorksheetOptions>
- </Worksheet>
- <Worksheet ss:Name="填写规则如下">
-  <Table ss:ExpandedColumnCount="1" ss:ExpandedRowCount="7" x:FullColumns="1"
-   x:FullRows="1" ss:DefaultColumnWidth="54" ss:DefaultRowHeight="13.5">
-   <Column ss:StyleID="s62"/>
-   <Row>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">填写规则如下： </Data></Cell>
-   </Row>
-   <Row>
-    <Cell><Data ss:Type="String">1,组织代码必填,是系统中已接受的组织代码 </Data></Cell>
-   </Row>
-   <Row>
-    <Cell><Data ss:Type="String">2,生效日期必填，请输入YYYY-MM-DD格式 </Data></Cell>
-   </Row>
-   <Row>
-    <Cell><Data ss:Type="String">3,时间日期请输入YYYY-MM-DD格式 </Data></Cell>
-   </Row>
-   <Row>
-    <Cell><Data ss:Type="String">4,红色为必填项 </Data></Cell>
-   </Row>
-   <Row>
-    <Cell><Data ss:Type="String"></Data></Cell>
-   </Row>
-   <Row>
-    <Cell><Data ss:Type="String">请按照规则录入数据，否则将导致数据丢失或录入失败！</Data></Cell>
-   </Row>
-  </Table>
-  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
-   <ProtectObjects>False</ProtectObjects>
-   <ProtectScenarios>False</ProtectScenarios>
-  </WorksheetOptions>
- </Worksheet>
-</Workbook>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ss:Workbook xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:html="http://www.w3.org/TR/REC-html40" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">
+  <o:DocumentProperties>
+    <o:LastAuthor>Richie.Huang</o:LastAuthor>
+    <o:Created>2017-06-18 12:27:58</o:Created>
+    <o:LastSaved>2017-06-18 12:27:58</o:LastSaved>
+    <o:Version>11.9999</o:Version>
+  </o:DocumentProperties>
+  <x:ExcelWorkbook>
+    <x:WindowHeight>10005</x:WindowHeight>
+    <x:WindowWidth>10005</x:WindowWidth>
+    <x:WindowTopX>120</x:WindowTopX>
+    <x:WindowTopY>135</x:WindowTopY>
+    <x:ProtectStructure>False</x:ProtectStructure>
+    <x:ProtectWindows>False</x:ProtectWindows>
+  </x:ExcelWorkbook>
+  <ss:Styles>
+    <ss:Style ss:ID="Default" ss:Name="Normal">
+      <ss:Interior />
+      <ss:NumberFormat />
+      <ss:Font ss:FontName="宋体" ss:Size="11" ss:Color="#000000" />
+    </ss:Style>
+    <ss:Style ss:ID="sc">
+      <ss:Interior />
+      <ss:NumberFormat ss:Format="@" />
+      <ss:Font ss:FontName="宋体" ss:Size="11" ss:Color="#000000" />
+    </ss:Style>
+    <ss:Style ss:ID="sh">
+      <ss:Interior ss:Color="#3366FF" ss:Pattern="Solid" />
+      <ss:NumberFormat />
+      <ss:Font ss:FontName="宋体" ss:Size="11" ss:Color="#FFFFFF" />
+    </ss:Style>
+    <ss:Style ss:ID="shm">
+      <ss:Interior ss:Color="#FF0000" ss:Pattern="Solid" />
+      <ss:NumberFormat />
+      <ss:Font ss:FontName="宋体" ss:Size="11" ss:Color="#FFFFFF" />
+    </ss:Style>
+  </ss:Styles>
+  <ss:Worksheet ss:Name="OrgBusinessDataImport">
+    <ss:Table>
+      <ss:Column ss:Index="1" ss:StyleID="sc" />
+      <ss:Column ss:Index="2" ss:StyleID="sc" />
+      <ss:Column ss:Index="3" ss:StyleID="sc" />
+      <ss:Column ss:Index="4" ss:StyleID="sc" />
+      <ss:Column ss:Index="5" ss:StyleID="sc" />
+      <ss:Column ss:Index="6" ss:StyleID="sc" />
+      <ss:Row>
+        <ss:Cell ss:StyleID="sh" ss:MergeDown="0">
+          <ss:Data ss:Type="String">组织名称</ss:Data>
+        </ss:Cell>
+        <ss:Cell ss:StyleID="shm" ss:MergeDown="0">
+          <ss:Data ss:Type="String">组织代码</ss:Data>
+        </ss:Cell>
+        <ss:Cell ss:StyleID="shm" ss:MergeDown="0">
+          <ss:Data ss:Type="String">生效日期</ss:Data>
+        </ss:Cell>
+        <ss:Cell ss:StyleID="sh" ss:MergeDown="0">
+          <ss:Data ss:Type="String">公用代码类型(更新公用代码明细)</ss:Data>
+        </ss:Cell>
+        <ss:Cell ss:StyleID="sh" ss:MergeDown="0">
+          <ss:Data ss:Type="String">公用代码编号(更新公用代码明细)</ss:Data>
+        </ss:Cell>
+        <ss:Cell ss:StyleID="sh" ss:MergeDown="0">
+          <ss:Data ss:Type="String">公用代码名称(更新公用代码明细)</ss:Data>
+        </ss:Cell>
+      </ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">社保身份</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">1</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">不区分</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">社保身份</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">本地城镇</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">社保身份</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">3</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">外地城镇</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">社保身份</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">4</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">本地农村</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">社保身份</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">5</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">外地农村</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">社保身份</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">6</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">新职工</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">社保身份</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">7</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">老职工</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">社保身份</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">8</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">45岁以上-本地城镇</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">社保身份</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">9</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">45岁以上-本地农村</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">社保身份</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">10</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">45岁以上-外地城镇</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">社保身份</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">11</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">45岁以上-外地农村</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">社保身份</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">12</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">45岁以下-本地城镇</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">社保身份</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">13</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">45岁以下-本地农村</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">社保身份</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">14</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">45岁以下-外地城镇</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">社保身份</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">15</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">45岁以下-外地农村</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">基本险种</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">1</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">养老保险</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">基本险种</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">医疗保险</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">基本险种</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">3</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">大额医疗</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">基本险种</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">4</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">补充医疗</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">基本险种</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">5</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">失业保险</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">基本险种</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">6</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">生育保险</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">基本险种</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">7</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">残疾人就业保障金</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">基本险种</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">8</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">工伤保险</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">基本险种</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">9</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">补充工伤</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">基本险种</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">10</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">住房公积金</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">基本险种</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">11</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">住房公积金补充</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">基本险种</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">12</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">企业年金</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">基本险种</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">13</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">企业年金补充</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">银行名称</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">0</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">中国银行</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">薪资架构异动原因</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">1</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">普调</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">薪资架构异动原因</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">绩效调薪</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">薪资架构异动原因</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">3</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">晋升调薪</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">薪资架构异动原因</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">4</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">职位异动调薪</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">薪资架构异动原因</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">5</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">特殊调薪</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">薪资架构异动原因</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">6</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">大学生调薪</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">薪资架构异动原因</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">7</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">其他</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">开户行地区</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">1</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">11-北京</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">开户行地区</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">12-天津</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">开户行地区</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">3</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">13-河北</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">开户行地区</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">4</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">14-山西</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">开户行地区</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">5</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">15-内蒙</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">开户行地区</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">6</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">21-辽宁</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">开户行地区</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">7</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">23-黑龙江</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">开户行地区</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">8</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">31-上海</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">开户行地区</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">9</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">32-江苏</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">开户行地区</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">10</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">33-浙江</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">开户行地区</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">11</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">34-安徽</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">开户行地区</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">12</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">35-福建</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">开户行地区</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">13</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">36-江西</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">开户行地区</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">14</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">37-山东</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">开户行地区</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">15</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">41-河南</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">开户行地区</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">16</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">42-湖北</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">开户行地区</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">17</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">43-湖南</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">开户行地区</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">18</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">44-广东</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">开户行地区</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">19</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">45-广西</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">开户行地区</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">20</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">51-四川</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">开户行地区</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">21</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">53-云南</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">开户行地区</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">22</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">61-陕西</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">开户行地区</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">23</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">65-新疆</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">开户行地区</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">24</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">71-苏州</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">开户行地区</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">25</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">72-宁波</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">开户行地区</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">26</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">99-深圳</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">组织架构同步(组织同步)</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">1</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">安徽分公司</ss:Data>
+</ss:Cell>
+</ss:Row>
+    </ss:Table>
+  </ss:Worksheet>
+  <ss:Worksheet ss:Name="填写规则如下">
+    <ss:Table>
+      <ss:Column ss:Index="1" ss:StyleID="sc" />
+      <ss:Row>
+        <ss:Cell ss:StyleID="sh" ss:MergeDown="0">
+          <ss:Data ss:Type="String">填写规则如下： </ss:Data>
+        </ss:Cell>
+      </ss:Row>
+      <ss:Row>
+        <ss:Cell ss:MergeDown="0">
+          <ss:Data ss:Type="String">1,组织代码必填,是系统中已接受的组织代码 </ss:Data>
+        </ss:Cell>
+      </ss:Row>
+      <ss:Row>
+        <ss:Cell ss:MergeDown="0">
+          <ss:Data ss:Type="String">2,生效日期必填，请输入YYYY-MM-DD格式 </ss:Data>
+        </ss:Cell>
+      </ss:Row>
+      <ss:Row>
+        <ss:Cell ss:MergeDown="0">
+          <ss:Data ss:Type="String">3,时间日期请输入YYYY-MM-DD格式 </ss:Data>
+        </ss:Cell>
+      </ss:Row>
+      <ss:Row>
+        <ss:Cell ss:MergeDown="0">
+          <ss:Data ss:Type="String">4,红色为必填项 </ss:Data>
+        </ss:Cell>
+      </ss:Row>
+      <ss:Row>
+        <ss:Cell ss:MergeDown="0">
+          <ss:Data ss:Type="String" />
+        </ss:Cell>
+      </ss:Row>
+      <ss:Row>
+        <ss:Cell ss:MergeDown="0">
+          <ss:Data ss:Type="String">请按照规则录入数据，否则将导致数据丢失或录入失败！</ss:Data>
+        </ss:Cell>
+      </ss:Row>
+    </ss:Table>
+  </ss:Worksheet>
+</ss:Workbook>
