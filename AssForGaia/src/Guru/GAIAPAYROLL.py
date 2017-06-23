@@ -130,7 +130,7 @@ def checkContentInMimeTypes(checkThing,mimetypepath,addSet):
 def writeMimetype(mimetypepath): 
     ''' use def checkContentInMimeTypes overwrite  mimetype config file one by one
     mimetypepath:the config file in local for webdirver firefox '''   
-    mimetypepath = r'C:\Users\Administrator\AppData\Roaming\Mozilla\Firefox\Profiles\hdjophne.default\mimeTypes.rdf'
+    mimetypepath = r'C:\Users\Administrator\AppData\Roaming\Mozilla\Firefox\Profiles\qtvtlj7m.Selenium\mimeTypes.rdf'
     addSet = {} 
     addSet['xls'] =  r'''<RDF:Description RDF:about="urn:mimetype:application/xls" NC:value="application/xls" NC:fileExtensions="xls">  </RDF:Description>
         <RDF:Description RDF:about="urn:mimetype:handler:application/xls" NC:saveToDisk="true" NC:alwaysAsk="false" ></RDF:Description>'''
@@ -142,11 +142,21 @@ def writeMimetype(mimetypepath):
     newcheckXlsx,oldcheckXlsx = checkContentInMimeTypes(checkThing='xlsx',mimetypepath=mimetypepath,addSet=addSet)
     #print('newcheckXlsx:%s'%(newcheckXlsx))
     #print('oldcheckXlsx:%s'%(oldcheckXlsx))
+def createHideDriver(requestInfo):    
+    driver = webdriver.PhantomJS('phantomjs')
+    loginurl = requestInfo.rooturl + r'/Account/Logon?'
+    driver.get(loginurl)
+    time.sleep(2)
+    driver.find_element_by_id('account_INPUT_IDENTITY').send_keys(requestInfo.webname)
+    driver.find_element_by_id('password').send_keys(requestInfo.webpsw)
+    driver.find_element_by_class_name('btn-lg').click()
+    time.sleep(2)
+    return driver
 def createDriver(requestInfo):
     '''create firefox webdriver and phantomjs webdriver 
         showMode:['show','hide']
     '''
-    profile_directory = r'C:\Users\Administrator\AppData\Roaming\Mozilla\Firefox\Profiles\hdjophne.default'
+    profile_directory = r'C:\Users\Administrator\AppData\Roaming\Mozilla\Firefox\Profiles\qtvtlj7m.Selenium'
     writeMimetype(mimetypepath=profile_directory)
     profile = webdriver.FirefoxProfile(profile_directory)
     profile.set_preference('browser.download.dir', r'E:\KM\GITPROJECT\HumanResourcesAss\AssForGaia\src\Guru\tmpfile')
@@ -858,8 +868,107 @@ def addAreaDetail_Post(requestInfo,sinPerProID,sinInsAreaID,sinInsAreaDetail,PC_
             print('No Msg!')
         else:
             print('Add Msg:%s'%(msg[0]))
-        
-      
+def getPersonID(requestInfo,calempid): 
+    needurl = requestInfo.rooturl + r'/ePersonnel/BaseMaterial/BaseMaterialPage.aspx'
+    needPostData = {} 
+    needPostData['__VIEWSTATE'] = get_ViewState(needurl,requestInfo.headers,requestInfo.http)
+    needPostData['UserQuery1$txtEmployeeIDQuery'] = calempid
+    needPostData['UserQuery1$txtStatusNameList'] = '正式,试用,晋级试用,离职,退休,调出'
+    needPostData['UserQuery1$txtStatusIDList'] = '2,1,6,4,3,5'
+    
+    needPostData['UserQuery1$nImgSearch'] = '查询'
+    response = requestNeedurl(needurl,postData = needPostData,headers = requestInfo.headers,CookieOpener = requestInfo.CookieOpener)
+    readSoup = bs.BeautifulSoup(response.read().decode(),'html.parser') 
+    print('readSoup:%s'%(readSoup))
+    list_personid = readSoup.find_all('tr',id = re.compile("UltraBaseInfo_r_.*"))
+    empInfo = {}
+    for sin_personid in list_personid:
+        empno = sin_personid.find_all('td')[3].find('nobr').string
+        personid = sin_personid.find_all('td')[5].find('nobr').string
+        empInfo[empno] = personid
+    print('empInfo:%s'%(empInfo))
+    return empInfo
+def getEmpInfo(driver,requestInfo,calempid):
+    empInfo = getPersonID(requestInfo,calempid)
+    personid = empInfo.get(calempid)
+    needurl = requestInfo.rooturl + r'/ePersonnel/BaseMaterial/CustomForm/PersonEdit.aspx?PersonID=' + personid   
+    driver.get(needurl)
+    time.sleep(2)
+    needurl = requestInfo.rooturl + r'/ePersonnel/Adjust/AdjustItemQuery.aspx'
+    js="window.open('"+ needurl +"','_newtab')"
+    driver.execute_script(js)
+    time.sleep(2)
+    now_handle = driver.current_window_handle
+    all_handles = driver.window_handles
+    for handle in all_handles:
+        if handle in driver.window_handles:
+            driver.switch_to_window(handle)
+            if driver.current_url == needurl:
+                now_handle = handle
+    driver.switch_to_window(now_handle)
+    driver.find_element_by_id('CommonUserQuery1_txtEmployeeIDQuery').send_keys(calempid)
+    driver.find_element_by_id('CommonUserQuery1_nImgSearch').click()
+
+def getCalList(driver,requestInfo):  
+    needurl = requestInfo.rooturl + '/ePayroll/payrollpackage/PayRollPackageFlow.aspx'
+    driver.get(needurl)
+    time.sleep(2)
+    driver.find_element_by_id('btnQuery').click()
+    time.sleep(2)
+    driver.find_element_by_xpath("//select[@class='pager-sizes']/option[@value='200']").click()
+    time.sleep(2)
+    
+    tmpPageSource = driver.page_source    
+    readSoup = bs.BeautifulSoup(tmpPageSource,'lxml')
+    
+    listGroup = []
+    singletr = readSoup.find('thead',class_='ig_71cf6462_r1 WebGridText ig_71cf6462_r4').find('tr')
+    extendNamelist = [singletd.find('nobr').string for singletd in singletr.find_all('th')].copy()
+    print('extendNamelist:%s'%(extendNamelist))
+    extendValuelist = []
+    for singletr in readSoup.find('tbody',class_='ig_71cf6462_r1 WebGridText ig_71cf6462_r4').find_all('tr'):
+        extendValuelist.append([singletd.find('nobr').string for singletd in singletr.find_all('td')].copy())
+    if  len(extendValuelist) > 0: 
+        for singleExtendValue in extendValuelist:
+            singleExtendGroup = {}
+            for i in range(len(singleExtendValue)):
+                if extendNamelist[i] is not None and len(extendNamelist[i]) > 0 and extendNamelist[i] in ['薪资发放名称','编号','薪资发放状态']:
+                    singleExtendGroup[extendNamelist[i]] = singleExtendValue[i]
+            listGroup.append(singleExtendGroup.copy())
+    else:
+        print('No extend group list') 
+    print('listGroup:%s'%(listGroup))
+    return listGroup
+def getCalDebug(requestInfo,packagename,workNO,calList):
+    dicCal = {}
+    for sinCal in calList:
+        dicCal[sinCal.get('薪资发放名称')]=sinCal.get('编号')
+    packageID = dicCal.get(packagename)
+    if packageID=='':
+        print('读取错误,未读取到指定薪资包ID')
+        pass
+    else:
+        if workNO=='':
+            print('读取错误, 未读取到指定工号') 
+            pass
+        else:
+            print('请求开始,请求基本参数：薪资包ID：%s;工号：%s'%(packageID,workNO))  
+            needurl = requestInfo.rooturl + r'/ePayroll/PayrollPackage/PackageCalculateDebug.aspx?PackageID='+packageID
+            viewState = get_ViewState(needurl,requestInfo.headers,requestInfo.http)
+            if viewState=='':
+                print('读取错误, 未读取到入口页面的页面状态，请先点击登录进行模拟登录')
+            else:
+                needPostData = {'__VIEWSTATE':viewState,'txtWorkNO':workNO,'BtnDebug':'调试','TxtPackageID':packageID}
+                response = requestNeedurl(needurl,postData = needPostData,headers = requestInfo.headers,CookieOpener = requestInfo.CookieOpener)
+                readResponse = response.read().decode()
+                readSoup = bs.BeautifulSoup(readResponse,"html.parser").find(id="txtDebugInfo").string
+                print('readSoup:%s'%(readSoup))
+    return  readSoup 
+def getSalStruct(driver,requestInfo,calempid):
+    
+
+http://peter/zybxehr/ePayroll/PersonalPayrollInformationManage/PayrollStructGroupHistory.aspx?
+userid=413eda45-537e-41b6-9ce2-29b461dfbbc1&opType=HisStructure
 
 def projectend():
     pass   
@@ -920,10 +1029,10 @@ listExtendByDoc = readExtendByDoc(requestInfo,fileName)
 #事项8：更新自定义程序池
 #updatePool(driver,requestInfo)
 #事项：新增缴纳地区
-sinInsArea = '测试'
-addInsArea_Post(requestInfo,sinInsArea)
+#sinInsArea = '测试'
+#addInsArea_Post(requestInfo,sinInsArea)
 #queryInsArea(requestInfo)
-queryInsAreaID(driver,requestInfo)
+#queryInsAreaID(driver,requestInfo)
 #queryPersonPropID(requestInfo)
 #sinInsAreaID = r'b2130c41-da2b-4dcb-b6fe-ec2bed07dfb5'
 #sinPerProID = r'952dca26-3736-4233-ab19-04ea8e7c6c50'
@@ -936,5 +1045,12 @@ queryInsAreaID(driver,requestInfo)
 #addAreaDetail_Post(requestInfo,sinPerProID,sinInsAreaID,sinInsAreaDetail)
 
 #updateInsAreaDetailByDoc(driver,requestInfo,list_InsAreaDetail_ByDoc)
+
+#getPersonID(requestInfo,'0006061,0002332')
+#getEmpInfo(driver,requestInfo,'0006061')
+
+
+#getCalList(driver,requestInfo)
+getCalDebug('5d2d7fab-49f2-4ed0-ae24-f35d7bc53c3c','0006061')
 t2 = time.clock()
 print ("the project costs %.9fs"%(t2-t1))

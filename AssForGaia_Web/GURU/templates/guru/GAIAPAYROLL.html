@@ -42,6 +42,20 @@ function updateInsAreaDetailByDoc() {
 	var INSAction = $("#btnupdateInsAreaDetailByDoc").val()
 	document.getElementById("__INSAction").value = INSAction;
 }
+
+
+function getEmpInfo() {
+	var PYCALAction = $("#btngetEmpInfo").val()
+	document.getElementById("__PYCALAction").value = PYCALAction;
+}
+
+function getCalDebug() {
+	var PYCALAction = $("#btngetCalDebug").val()
+	document.getElementById("__PYCALAction").value = PYCALAction;
+}
+
+
+
 </script>
 
 
@@ -107,6 +121,9 @@ function updateInsAreaDetailByDoc() {
             <td><input class='contentbutton autowidth' name="btnupdatePool" value="更新程序池" id="btnupdatePool" type="submit" onclick="updatePool();"/></td> 
             <td><input class='contentbutton autowidth' name="btnupdateFormual" value="更新公式" id="btnupdateFormual" type="submit" onclick="updateFormual();"/></td>   
         </tr>
+        <tr>
+        	<td></td> 
+        </tr>
     </table>
 	</form>
 	</div>
@@ -127,9 +144,55 @@ function updateInsAreaDetailByDoc() {
             <td></td> 
             <td></td>   
         </tr>
+        <tr>
+        	<td></td> 
+        </tr>
     </table>
 	</form>
 	</div>
+
+	<div class='bg-logon-content leftcontent minwidth'>
+	<form id='form4' action='updatePYCALAbout/' method="POST">
+	<input type="hidden" name="__PYCALAction" id="__PYCALAction" value="" />
+	<table id="Table4" class='dtNAV'>
+		<tr>
+        	<td class='TD1'>调试工号</td>
+        	<td class='TD2'><input name="calempno" maxlength="40" id="calempno" class="TextBox normal-text" style="width:200px;" type="text"/>
+        	 </td>	
+      	</tr>
+      	<tr>
+        	<td class='TD1'>调试薪资包名称</td>
+        	<td class='TD2'><input name="calpackagename" maxlength="40" id="calpackagename" class="TextBox normal-text" style="width:200px;" type="text"/>
+        	 </td>	
+      	</tr>
+	</table>
+	<table class='dtBread'>
+        <tr>
+            <td><input class='contentbutton autowidth' name="btngetEmpInfo" value="点击查看人事资料" id="btngetEmpInfo" type="submit" onclick="getEmpInfo()"/></td>
+            <td><input class='contentbutton autowidth' name="btngetCalDebug" value="点击查看调试信息" id="btngetCalDebug" type="submit" onclick="getCalDebug()"/></td>
+            <td></td>   
+        </tr>
+        <tr>
+        	<td></td> 
+        </tr>
+    </table>
+	</form>
+	</div>
+	
+	<div class='bg-logon-content leftcontent minwidth'>
+	<table id="Table4" class='dtNAV'>
+		<tr>
+        	<td class='TD1'>调试信息</td>
+      	</tr>
+      	<tr>
+        	<td><textarea style="width:100%;min-height:100px" rows="15" cols="20" name="calDebug" id="calDebug" class="TextBox normal-text"></textarea>
+        	
+        	
+        	 </td>	
+      	</tr>
+	</table>
+	</div>
+	
 		
 </div>
 
@@ -144,6 +207,10 @@ function updateInsAreaDetailByDoc() {
 	
 	var defaultINSfilename = {{defaultINSfilename|safe}}
     document.getElementById("insfilename").value = defaultINSfilename; 	
+	
+	var resultcalDebug = {{resultcalDebug|safe}}
+    document.getElementById("calDebug").value = resultcalDebug; 
+	
 </script>
 </body>
 </html>

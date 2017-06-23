@@ -927,7 +927,112 @@ def updateInsAreaDetailByDoc(driver,requestInfo,list_InsAreaDetail_ByDoc):
             addAreaDetail_Post(requestInfo,sinPerProID_Sys,sinInsArea_Sys,sin_InsAreaDetail_ByDoc,PC_InsType)
             #addAreaDetail(driver,requestInfo,sinPerProID_Sys,sinInsArea_Sys,sin_InsAreaDetail_ByDoc)
     print('updateInsAreaDetailByDoc end')
+def getPersonID(requestInfo,calempid): 
+    needurl = requestInfo.rooturl + r'/ePersonnel/BaseMaterial/BaseMaterialPage.aspx'
+    needPostData = {} 
+    needPostData['__VIEWSTATE'] = get_ViewState(needurl,requestInfo.headers,requestInfo.http)
+    needPostData['UserQuery1$txtEmployeeIDQuery'] = calempid
+    needPostData['UserQuery1$txtStatusNameList'] = '正式,试用,晋级试用,离职,退休,调出'
+    needPostData['UserQuery1$txtStatusIDList'] = '2,1,6,4,3,5'
     
+    needPostData['UserQuery1$nImgSearch'] = '查询'
+    response = requestNeedurl(needurl,postData = needPostData,headers = requestInfo.headers,CookieOpener = requestInfo.CookieOpener)
+    readSoup = bs.BeautifulSoup(response.read().decode(),'html.parser') 
+    #print('readSoup:%s'%(readSoup))
+    list_personid = readSoup.find_all('tr',id = re.compile("UltraBaseInfo_r_.*"))
+    empInfo = {}
+    for sin_personid in list_personid:
+        empno = sin_personid.find_all('td')[3].find('nobr').string
+        personid = sin_personid.find_all('td')[5].find('nobr').string
+        empInfo[empno] = personid
+    print('empInfo:%s'%(empInfo))
+    return empInfo
+def getEmpInfo(driver,requestInfo,calempid):
+    empInfo = getPersonID(requestInfo,calempid)
+    personid = empInfo.get(calempid)
+    needurl = requestInfo.rooturl + r'/ePersonnel/BaseMaterial/CustomForm/PersonEdit.aspx?PersonID=' + personid   
+    driver.get(needurl)
+    time.sleep(2)
+    needurl = requestInfo.rooturl + r'/ePersonnel/Adjust/AdjustItemQuery.aspx'
+    js="window.open('"+ needurl +"','_newtab')"
+    driver.execute_script(js)
+    time.sleep(2)
+    now_handle = driver.current_window_handle
+    all_handles = driver.window_handles
+    for handle in all_handles:
+        if handle in driver.window_handles:
+            driver.switch_to_window(handle)
+            if driver.current_url == needurl:
+                now_handle = handle
+    driver.switch_to_window(now_handle)
+    driver.find_element_by_id('CommonUserQuery1_txtEmployeeIDQuery').send_keys(calempid)
+    driver.find_element_by_id('CommonUserQuery1_nImgSearch').click()
+def getCalList(driver,requestInfo):  
+    needurl = requestInfo.rooturl + '/ePayroll/payrollpackage/PayRollPackageFlow.aspx'
+    driver.get(needurl)
+    time.sleep(2)
+    driver.find_element_by_id('btnQuery').click()
+    time.sleep(2)
+    driver.find_element_by_xpath("//select[@class='pager-sizes']/option[@value='200']").click()
+    time.sleep(2)
+    
+    tmpPageSource = driver.page_source    
+    readSoup = bs.BeautifulSoup(tmpPageSource,'lxml')
+    
+    listGroup = []
+    singletr = readSoup.find('thead',class_='ig_71cf6462_r1 WebGridText ig_71cf6462_r4').find('tr')
+    extendNamelist = [singletd.find('nobr').string for singletd in singletr.find_all('th')].copy()
+    print('extendNamelist:%s'%(extendNamelist))
+    extendValuelist = []
+    for singletr in readSoup.find('tbody',class_='ig_71cf6462_r1 WebGridText ig_71cf6462_r4').find_all('tr'):
+        extendValuelist.append([singletd.find('nobr').string for singletd in singletr.find_all('td')].copy())
+    if  len(extendValuelist) > 0: 
+        for singleExtendValue in extendValuelist:
+            singleExtendGroup = {}
+            for i in range(len(singleExtendValue)):
+                if extendNamelist[i] is not None and len(extendNamelist[i]) > 0 and extendNamelist[i] in ['薪资发放名称','编号','薪资发放状态']:
+                    singleExtendGroup[extendNamelist[i]] = singleExtendValue[i]
+            listGroup.append(singleExtendGroup.copy())
+    else:
+        print('No extend group list') 
+    print('listGroup:%s'%(listGroup))
+    return listGroup
+def getCalDebug(requestInfo,packagename,workNO,calList):
+    dicCal = {}
+    for sinCal in calList:
+        dicCal[sinCal.get('薪资发放名称')]=sinCal.get('编号')
+    packageID = dicCal.get(packagename)
+    if packageID=='':
+        print('读取错误,未读取到指定薪资包ID')
+        pass
+    else:
+        if workNO=='':
+            print('读取错误, 未读取到指定工号') 
+            pass
+        else:
+            print('请求开始,请求基本参数：薪资包ID：%s;工号：%s'%(packageID,workNO))  
+            needurl = requestInfo.rooturl + r'/ePayroll/PayrollPackage/PackageCalculateDebug.aspx?PackageID='+packageID
+            viewState = get_ViewState(needurl,requestInfo.headers,requestInfo.http)
+            if viewState=='':
+                print('读取错误, 未读取到入口页面的页面状态，请先点击登录进行模拟登录')
+            else:
+                needPostData = {'__VIEWSTATE':viewState,'txtWorkNO':workNO,'BtnDebug':'调试','TxtPackageID':packageID}
+                response = requestNeedurl(needurl,postData = needPostData,headers = requestInfo.headers,CookieOpener = requestInfo.CookieOpener)
+                readResponse = response.read().decode()
+                readSoup = bs.BeautifulSoup(readResponse,"html.parser").find(id="txtDebugInfo").string
+                print('readSoup:%s'%(readSoup))
+    return  readSoup 
+
+def getEmpInfo(driver,requestInfo,calempid):
+    empInfo = getPersonID(requestInfo,calempid)
+    personid = empInfo.get(calempid)
+
+def web_GAIAPAYROLLCAL(request):
+    '''request for payrollcal '''
+    #defaultFileName = r'E:\工作文档\1608-中银\06业务流程分析\薪资管理\test.docx'
+    defaultcalempno = r'0006061'
+    defaultcalpackagename = r'顾问薪资测算' 
+    return render_to_response('GURU/GAIAPAYROLLCAL.html',{'defaultcalempno':json.dumps(defaultcalempno),'defaultcalpackagename':json.dumps(defaultcalpackagename)})    
 def GAIAPAYROLL(request):
     '''request for payroll '''
     #defaultFileName = r'E:\工作文档\1608-中银\06业务流程分析\薪资管理\test.docx' 
@@ -937,6 +1042,7 @@ def GAIAPAYROLL(request):
     return render_to_response('GURU/GAIAPAYROLL.html',{
         'defaultFileName':json.dumps(defaultFileName),'defaultCFGFileName':json.dumps(defaultCFGFileName),'defaultINSfilename':json.dumps(defaultINSfilename)
     }) 
+    
 def web_updatePublicGroupByDoc(request):
     if request.method == "POST": 
         action =  request.POST.get('__Action')
@@ -1086,6 +1192,67 @@ def web_updateInsAbout(request):
         elif action == '删除保险补缴数据':
             pass
         return HttpResponseRedirect("/GURU/GAIAPAYROLL/") 
+    
+def web_payrollCal(request):
+    if request.method == "POST": 
+        action =  request.POST.get('__PYCALAction')
+        print('action:%s'%(action))
+        calempno =  request.POST.get('calempno')
+        print('calempno:%s'%(calempno))
+        calpackagename =  request.POST.get('calpackagename')
+        print('calpackagename:%s'%(calpackagename))
+    else:
+        action =  request.GET.get('action')
+        calempno =  request.GET.get('calempno')
+        calpackagename =  request.GET.get('calpackagename')
+        print('action:%s'%(action))
+        print('calempno:%s'%(calempno))
+        print('calpackagename:%s'%(calpackagename))
+    cookie = cookielib.CookieJar()
+    handler = urllib.request.HTTPCookieProcessor(cookie)
+    CookieOpener = urllib.request.build_opener(handler)
+    headers = {}
+    headers['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    headers['Accept-Encoding'] = 'deflate'
+    headers['Accept-Language'] = 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3'
+    headers['Connection'] = 'keep-alive'
+    headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0'
+    
+    webSourceInfo = updateWebSource.classReadWebSouce()  
+    dbSourceInfo = updateLogin.readConn()
+    
+    rooturl = webSourceInfo.getRooturl()
+    host = webSourceInfo.getHost()
+    port = webSourceInfo.getPort()
+    webname = webSourceInfo.getWebname()
+    webpsw = webSourceInfo.getWebpsw()
+    tmpFilePath = r'E:\KM\GITPROJECT\HumanResourcesAss\AssForGaia\src\Guru\tmpfile'
+    showMode = r'show'
+    loginurl = rooturl + r'/Account/Logon?'
+    http = httplib2.Http()
+    requestInfo = UrlRequest(rooturl=rooturl,host=host,port=port,webname=webname,webpsw=webpsw,tmpFilePath=tmpFilePath,showMode=showMode,cookie=cookie,headers=headers,loginurl=loginurl,CookieOpener=CookieOpener,http=http)
+    
+    if action == '点击查看人事资料':
+        resLogin = loginInSystem(requestInfo)
+        driver = createDriver(requestInfo)
+        getEmpInfo(driver,requestInfo,)
+        driver.close()
+    elif action == '点击查看调试信息':
+        resLogin = loginInSystem(requestInfo)
+        driver = createDriver(requestInfo)
+        calList = getCalList(driver,requestInfo)
+        resultcalDebug = getCalDebug(requestInfo,calpackagename,calempno,calList)
+        driver.close()
+        return HttpResponse(resultcalDebug)
+        #render_to_response('GURU/GAIAPAYROLLCAL.html',{'resultcalDebug':json.dumps(resultcalDebug)})
+        
+    
+    
+    elif action == '删除保险补缴数据':
+        pass
+    return HttpResponseRedirect("/GURU/GAIAPAYROLLCAL/") 
+
+
 
 t2 = time.clock()
 print ("the project costs %.9fs"%(t2-t1))
