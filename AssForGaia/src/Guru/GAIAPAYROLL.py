@@ -27,6 +27,11 @@ except ImportError:
 import xlrd
 from xlutils.copy import copy as xlwtcopy
 
+#用于连接mssql数据库
+import pymssql 
+
+
+
 t1 = time.clock()
 
 def requestNeedurl(needurl,postData,headers,CookieOpener):
@@ -66,7 +71,12 @@ def requestNeedurlByJsonPost(needurl,postData,headers,host,port):
     response = conn.getresponse()
     return response
 
-
+class DBSource:
+    def __init__(self,servername,dbusername,dbpsw,dbname):
+        self.servername = servername
+        self.dbusername = dbusername
+        self.dbpsw = dbpsw
+        self.dbname = dbname
 
 class UrlRequest:
     def __init__(self,rooturl,host,port,webname,webpsw,tmpFilePath,showMode,cookie,headers,loginurl,CookieOpener,http):
@@ -965,11 +975,33 @@ def getCalDebug(requestInfo,packagename,workNO,calList):
                 print('readSoup:%s'%(readSoup))
     return  readSoup 
 def getSalStruct(driver,requestInfo,calempid):
+    empInfo = getPersonID(requestInfo,calempid)
+    personid = empInfo.get(calempid)
+    needurl = requestInfo.rooturl + r'/ePayroll/PersonalPayrollInformationManage/PayrollStructGroupHistory.aspx?userid='+ personid + r'&opType=HisStructure'
+    driver.get(needurl)
+def connWithDB (dbconnInfo,orderNeed):   
+    '''read datalist from ms-sql database'''    
+    conn=pymssql.connect(dbconnInfo.servername,dbconnInfo.dbusername,dbconnInfo.dbpsw,dbconnInfo.dbname)
+    DBlist = []
+    cursor=conn.cursor()    
+    cursor.execute(orderNeed)
+    row=cursor.fetchone()
+    while row:
+        #print("readline:%s"%(row[0]))
+        DBlist.append(row[0])
+        row=cursor.fetchone()
+    conn.commit()    
+    conn.close()
+    return DBlist
+def connWithDBWithnoresult (dbconnInfo,orderNeed):    
+    conn=pymssql.connect(dbconnInfo.servername,dbconnInfo.dbusername,dbconnInfo.dbpsw,dbconnInfo.dbname)
+    cursor=conn.cursor()    
+    cursor.execute(orderNeed)
+    conn.commit()
+    conn.close()
+
+
     
-
-http://peter/zybxehr/ePayroll/PersonalPayrollInformationManage/PayrollStructGroupHistory.aspx?
-userid=413eda45-537e-41b6-9ce2-29b461dfbbc1&opType=HisStructure
-
 def projectend():
     pass   
 
@@ -984,9 +1016,9 @@ headers['Accept-Language'] = 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3'
 headers['Connection'] = 'keep-alive'
 headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0'
 
-rooturl = r'http://peter/zybxehr'
-host = r'peter'
-port = r'80'
+rooturl = r'http://http://114.55.86.61:81/'
+host = r'114.55.86.61'
+port = r'81'
 webname = r'sa'
 webpsw = r'111111'
 tmpFilePath = r'E:\KM\GITPROJECT\HumanResourcesAss\AssForGaia\src\Guru\tmpfile'
@@ -994,6 +1026,13 @@ showMode = r'show'
 loginurl = rooturl + r'/Account/Logon?'
 http = httplib2.Http()
 requestInfo = UrlRequest(rooturl=rooturl,host=host,port=port,webname=webname,webpsw=webpsw,tmpFilePath=tmpFilePath,showMode=showMode,cookie=cookie,headers=headers,loginurl=loginurl,CookieOpener=CookieOpener,http=http)
+
+servername = 'PETER'
+dbname = 'ZYBXSCeHR_DB_170207'
+dbusername = 'sa'
+dbpsw = '1qaz2wsx'
+dbconnInfo = DBSource(servername, dbusername, dbpsw, dbname)
+
 
 
 resLogin = loginInSystem(requestInfo)

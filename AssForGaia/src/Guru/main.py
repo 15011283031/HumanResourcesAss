@@ -3,6 +3,7 @@ import tkinter as tk #用于窗口界面设计
 import sys
 import tkinter.messagebox as mb #用于在窗口中创建messagebox
 import os #os.urandom用于随机生成秘钥key
+import pymssql
 import pymssql #用于连接mssql数据库
 from argcomplete.compat import str
 from twisted.conch.test.test_helper import HEIGHT

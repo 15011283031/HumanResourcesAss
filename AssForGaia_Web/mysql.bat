@@ -1,2 +1,2 @@
-cd e:\soft\xampp\mysql\bin
-mysql -hlocalhost -uassforgaia -p1qaz2wsx -D assforgaia
+cd d:\soft\xampp\mysql\bin
+mysql -hlocalhost -usa -py0729301613Q -Dassforgaia

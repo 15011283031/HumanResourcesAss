@@ -2,8 +2,8 @@
 <ss:Workbook xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:html="http://www.w3.org/TR/REC-html40" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">
   <o:DocumentProperties>
     <o:LastAuthor>Richie.Huang</o:LastAuthor>
-    <o:Created>2017-06-18 12:27:58</o:Created>
-    <o:LastSaved>2017-06-18 12:27:58</o:LastSaved>
+    <o:Created>2017-09-07 03:35:24</o:Created>
+    <o:LastSaved>2017-09-07 03:35:24</o:LastSaved>
     <o:Version>11.9999</o:Version>
   </o:DocumentProperties>
   <x:ExcelWorkbook>
@@ -721,7 +721,7 @@
 <ss:Data ss:Type="String">4</ss:Data>
 </ss:Cell>
 <ss:Cell>
-<ss:Data ss:Type="String">职位异动调薪</ss:Data>
+<ss:Data ss:Type="String">职位调整调薪</ss:Data>
 </ss:Cell>
 </ss:Row>
 <ss:Row>
@@ -781,7 +781,87 @@
 <ss:Data ss:Type="String">7</ss:Data>
 </ss:Cell>
 <ss:Cell>
+<ss:Data ss:Type="String">入职定薪</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">薪资架构异动原因</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">8</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">津贴调整</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">薪资架构异动原因</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">9</ss:Data>
+</ss:Cell>
+<ss:Cell>
 <ss:Data ss:Type="String">其他</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">薪资架构异动原因</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">99</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">系统初始化</ss:Data>
+</ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+<ss:Data ss:Type="String"></ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">2015-01-01</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">薪资核算类别</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">1</ss:Data>
+</ss:Cell>
+<ss:Cell>
+<ss:Data ss:Type="String">交流人员</ss:Data>
 </ss:Cell>
 </ss:Row>
 <ss:Row>
@@ -1302,26 +1382,6 @@
 </ss:Cell>
 <ss:Cell>
 <ss:Data ss:Type="String">99-深圳</ss:Data>
-</ss:Cell>
-</ss:Row>
-<ss:Row>
-<ss:Cell>
-<ss:Data ss:Type="String"></ss:Data>
-</ss:Cell>
-<ss:Cell>
-<ss:Data ss:Type="String">01</ss:Data>
-</ss:Cell>
-<ss:Cell>
-<ss:Data ss:Type="String">2015-01-01</ss:Data>
-</ss:Cell>
-<ss:Cell>
-<ss:Data ss:Type="String">组织架构同步(组织同步)</ss:Data>
-</ss:Cell>
-<ss:Cell>
-<ss:Data ss:Type="String">1</ss:Data>
-</ss:Cell>
-<ss:Cell>
-<ss:Data ss:Type="String">安徽分公司</ss:Data>
 </ss:Cell>
 </ss:Row>
     </ss:Table>

@@ -26,7 +26,7 @@ SECRET_KEY = 'v*8lm##s-5t2kokbnq628(@gom#ymc$6^9o4!^6c$4xv)v9r$8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1","Peter"]
+ALLOWED_HOSTS = ["127.0.0.1","localhost"]
 
 
 # Application definition
@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'GURU',
+    'AssForHR',
 ]
 
 MIDDLEWARE = [
@@ -79,9 +79,9 @@ WSGI_APPLICATION = 'AssForGaia_Web.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'AssForGaia',
-        'USER': 'assforgaia',
-        'PASSWORD':'1qaz2wsx',
+        'NAME': 'assforgaia',
+        'USER': 'sa',
+        'PASSWORD':'y0729301613Q',
         'HOST':'localhost',
         'PORT':'3306',
     }
