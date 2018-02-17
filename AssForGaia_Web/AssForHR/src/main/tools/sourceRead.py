@@ -1,6 +1,7 @@
 import json
 from src.main.tools.prpcrypt import prpcrypt
 import os
+import src.main.tools.readConfig as readConfig  # 从config文件中读取项目路径
 
 
 class DBSource:
@@ -56,12 +57,12 @@ def readConn():
     '''
 
     dbConn = DBSource(r'peter', r'sa', r'111111', r'gaia')
-    print (os.getcwd())
-    print('./AssForHR/static/config/sourcename.json')
-    if os.path.exists('./AssForHR/static/config/sourcename.json'):
-        print('./AssForHR/static/config/sourcename.json')
-        if os.path.getsize('./AssForHR/static/config/sourcename.json'):
-            with open('./AssForHR/static/config/sourcename.json') as connFile:
+    ConfigPath = readConfig.ConfigPath()
+    webAssforhrPath = ConfigPath.getWebAssforhrPath()
+    sourcenamePath = webAssforhrPath + '/static/config/sourcename.json'
+    if os.path.exists(sourcenamePath):
+        if os.path.getsize(sourcenamePath):
+            with open(sourcenamePath) as connFile:
                 readConnDict = json.load(connFile)
                 decrypt_tmpkey = prpcrypt(readConnDict['dbsalt'])
                 decrypt_psw = decrypt_tmpkey.decrypt(readConnDict['dbpsw'])
